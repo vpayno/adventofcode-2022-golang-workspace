@@ -4,6 +4,9 @@
 ## Badges
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/vpayno/adventofcode-2022-golang-workspace)](https://goreportcard.com/report/github.com/vpayno/adventofcode-2022-golang-workspace)
+[![Maintainability](https://api.codeclimate.com/v1/badges/605e8e2d133f7093cddf/maintainability)](https://codeclimate.com/github/vpayno/adventofcode-2022-golang-workspace/maintainability)
+
+[![Test Coverage](https://api.codeclimate.com/v1/badges/605e8e2d133f7093cddf/test_coverage)](https://codeclimate.com/github/vpayno/adventofcode-2022-golang-workspace/test_coverage)
 
 [![Go Checks](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/go.yml/badge.svg?branch=main)](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/go.yml)
 [![CodeQL Analysis](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/codeql-analysis-go.yml/badge.svg?branch=main)](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/codeql-analysis-go.yml)
