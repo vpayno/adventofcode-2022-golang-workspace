@@ -21,3 +21,12 @@
 [![GH Actions Workflow](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/gh-actions.yml/badge.svg?branch=main)](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/gh-actions.yml)
 [![Json Checks](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/json.yml/badge.svg?branch=main)](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/json.yml)
 [![Markdown Checks](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/markdown.yml/badge.svg?branch=main)](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/markdown.yml)
+
+
+## Daily Challenges
+
+
+### Day 01 - Calorie Counting
+
+- [Description](./calendar/day01-description.md)
+- [Input Data](./data/day01/day01-input.txt)
