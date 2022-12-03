@@ -13,4 +13,5 @@
 [![Spelling Checks](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/misspell.yml/badge.svg?branch=main)](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/misspell.yml)
 [![Yaml Workflow](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/yaml.yml/badge.svg?branch=main)](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/yaml.yml)
 [![GH Actions Workflow](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/gh-actions.yml/badge.svg?branch=main)](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/gh-actions.yml)
+[![Json Checks](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/json.yml/badge.svg?branch=main)](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/json.yml)
 [![Markdown Checks](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/markdown.yml/badge.svg?branch=main)](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/markdown.yml)
