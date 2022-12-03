@@ -1,0 +1,162 @@
+#!/bin/bash
+
+declare mode="${1:-latest}"
+declare release_message="${2:-}"
+
+git_get_tags() {
+	local tag="${1:-}"
+
+	if [[ -z ${tag} ]]; then
+		git tag | sort -Vr | grep -E '^v[[:digit:]]+[.][[:digit:]]+[.][[:digit:]]+$'
+	else
+		git tag | sort -Vr | grep -E '^v[[:digit:]]+[.][[:digit:]]+[.][[:digit:]]+$' | grep -A 1 "${tag}"
+	fi
+} # git_get_tags()
+
+git_get_tag_previous() {
+	local tag="${1:-}"
+
+	git_get_tags "${tag}" | head -n 2 | tail -n 1
+} # git_get_tag_previous()
+
+git_get_tag_latest() {
+	local tag="${1:-}"
+
+	git_get_tags "${tag}" | head -n 1
+} # git_get_tag_latest()
+
+git_cl() {
+	local tag="${1:-}"
+
+	local tag_previous
+	local tag_latest
+	local git_ref
+
+	if [[ ${tag} =~ ^v0.0.0\^$ ]]; then
+		git_ref="${tag}"
+	elif [[ ${tag} =~ ^release-(short|full:.*)$ ]]; then
+		git_ref="$(git_get_tags | head -n 1)..HEAD"
+	else
+		tag_previous="$(git_get_tag_previous "${tag}")"
+		tag_latest="$(git_get_tag_latest "${tag}")"
+
+		git_ref="${tag_previous}..${tag_latest}"
+	fi
+
+	git log --pretty=format:'    - %s' --abbrev-commit --decorate "${git_ref}"
+} # git_cl()
+
+get_release_heading() {
+	local tag="${1:-}"
+	local mode="${2:-}"
+
+	local heading_start="##"
+	local heading_end=""
+
+	if [[ ${mode%%:*} =~ ^all|release-full$ ]]; then
+		heading_start="<h2>"
+		heading_end="</h2>"
+	fi
+
+	if [[ ${tag%%:*} =~ ^release-short$ ]]; then
+		printf "release: %s\n" "${release_message}"
+		return
+	elif [[ ${tag%%:*} =~ ^release-full$ ]]; then
+		git log --pretty=format:"${heading_start} [%as] " --abbrev-commit --decorate -n 1 "${tag//release-*/HEAD}"
+		printf "Release %s: %s\n%s\n" "${tag##*:}" "${release_message}" "${heading_end}"
+		return
+	fi
+
+	git log --pretty=format:"${heading_start} [%as] " --abbrev-commit --decorate -n 1 "${tag//release-*/HEAD}"
+
+	if [[ ${tag} == v0.0.0^ ]]; then
+		printf "Release v0.0.0: initial release\n"
+	else
+		git_cl "${tag%%:*}" | head -n 1 | sed -r -e 's/^    - release: (v[[:digit:]]+[.][[:digit:]]+[.][[:digit:]]+) (- )?/Release \1: /g'
+	fi
+
+	printf "%s\n" "${heading_end}"
+}
+
+filter_commits() {
+	grep -v -e 'Initial commit' -e 'Merge pull request'
+} # filter_commits()
+
+get_release_body() {
+	local tag="${1:-}"
+
+	local -a sections
+
+	mapfile -t sections < <(git_cl "${tag}" | grep -v -E "^    - release: " | filter_commits | awk '{ print $2 }' | tr -d ":" | sort -Vu)
+
+	for section in "${sections[@]}"; do
+		printf "\n"
+		printf -- "### %s\n" "${section,,}"
+		printf "\n"
+		git_cl "${tag}" | grep -v -E "^    - release: " | filter_commits | sort -k 2,2 -V | grep -- "- ${section}: " | sed -r -e 's/^    - [[:alpha:]].*: /- /g' | sort -V
+	done
+}
+
+create_release_notes() {
+	local mode="${1}"
+
+	local first="true"
+	local -a tags
+	local open_fold_flag=" open"
+
+	if [[ ${mode} == latest ]]; then
+		mapfile -t tags < <(git_get_tag_latest)
+	elif [[ ${mode} == release-short ]]; then
+		mapfile -t tags < <(printf "%s\n" "${mode}")
+	elif [[ ${mode%%:*} == release-full ]]; then
+		printf "# %s Release Notes\n" '"Powerful Cli Applications in Go" Workspace'
+		printf "\n"
+
+		mapfile -t tags < <(printf "%s\n" "${mode}"; git_get_tags | sort -Vr)
+	elif [[ ${mode} =~ ^v[0-9]+[.][0-9]+[.][0-9]+$ ]]; then
+		if ! git tag | grep -q -E "^${mode##*:}$"; then
+			printf "ERROR: tag [%s] doesn't exist!\n" "${mode}"
+			exit 1
+		fi
+
+		mapfile -t tags < <(printf "%s\n" "${mode}")
+	else
+		printf "# %s Release Notes\n" '"Powerful Cli Applications in Go" Workspace'
+		printf "\n"
+
+		mapfile -t tags < <(git_get_tags | sort -Vr)
+	fi
+
+	for tag in "${tags[@]}"; do
+		if [[ ${tag} == v0.0.0 ]]; then
+			tag="${tag}^"
+		fi
+
+		if "${first}"; then
+			first="false"
+		else
+			printf "\n"
+		fi
+
+		[[ ${mode} =~ ^all|release-full:v.*$ ]] && printf "<details%s>\n    <summary>\n" "${open_fold_flag}"
+		get_release_heading "${tag}" "${mode}"
+		[[ ${mode} =~ ^all|release-full:v.*$ ]] &&	printf "    </summary>\n"
+		get_release_body "${tag}" "${mode}"
+		[[ ${mode} =~ ^all|release-full:v.*$ ]] && printf "\n</details>\n"
+
+		open_fold_flag=""
+	done
+
+	{
+		printf "Running misspell -w CHANGELOG.md...\n"
+		misspell -w CHANGELOG*.md
+		printf "done\n"
+	} 1>&2
+} # create_release_notes()
+
+if [[ ${mode} =~ ^(|latest|release-(short|full:v[0-9]+[.][0-9]+[.][0-9]+)|all|v[0-9]+[.][0-9]+[.][0-9]+)$ ]]; then
+	create_release_notes "${mode}"
+else
+	printf "Usage: %s ^(|latest|release-(short|full:[0-9]+[.][0-9]+[.][0-9]+)|all|v[0-9]+[.][0-9]+[.][0-9]+)$\n" "$0"
+	exit 1
+fi
