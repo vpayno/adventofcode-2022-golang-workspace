@@ -5,6 +5,8 @@
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/vpayno/adventofcode-2022-golang-workspace)](https://goreportcard.com/report/github.com/vpayno/adventofcode-2022-golang-workspace)
 
+[![Go Checks](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/go.yml/badge.svg?branch=main)](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/go.yml)
+
 [![Bash Checks](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/bash.yml/badge.svg?branch=main)](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/bash.yml)
 [![Git Checks](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/git.yml/badge.svg?branch=main)](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/git.yml)
 [![Link Check](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/links.yml/badge.svg?branch=main)](https://github.com/vpayno/adventofcode-2022-golang-workspace/actions/workflows/links.yml)
