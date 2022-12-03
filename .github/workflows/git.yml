@@ -1,0 +1,54 @@
+#
+# .github/workflows/git.yml
+#
+
+# https://www.conventionalcommits.org/en/v1.0.0/
+# https://www.npmjs.com/package/git-conventional-commits
+# https://github.com/webiny/action-conventional-commits
+---
+
+name: Git Workflow
+
+on:  # yamllint disable-line rule:truthy
+  push:
+    branches:
+      - main
+      - develop
+
+  pull_request:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  git-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        id: checkout-repo
+        uses: actions/checkout@v3
+
+      - name: Install Node
+        id: install-node
+        uses: actions/setup-node@v3
+        with:
+          node-version: lts/*
+
+      - name: Check Node Version
+        id: npm-version-check
+        run: |
+          npm --version
+
+      - name: Install Dependencies
+        id: install-dependencies
+        run: |
+          npm install --global git-conventional-commits
+
+      - name: Check for Conventional Commits
+        id: block-if-contains-bad-commit-messages
+        run: |
+          {
+            git-conventional-commits changelog
+          } | tee -a "${GITHUB_STEP_SUMMARY}"
