@@ -1,0 +1,4 @@
+# .woke.yaml
+---
+ignore_files:
+  - site/
