@@ -35,7 +35,7 @@ func Run(conf Config) error {
 func getFile(fileName string) (*os.File, error) {
 	fileName = filepath.Clean(fileName)
 
-	if !strings.HasPrefix(fileName, "./data/day") {
+	if !strings.HasPrefix(fileName, "data/day") {
 		return nil, errors.New("unsafe file path")
 	}
 
