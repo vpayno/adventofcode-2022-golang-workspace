@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -25,9 +26,13 @@ func Run(conf Config) error {
 		return err
 	}
 
-	result := getResult(data)
+	topCalories := getResultTopCalories(data)
 
-	showResult(result)
+	showResult(topCalories)
+
+	topThreeCalories := getResultTopThreeCalories(data)
+
+	showResult(topThreeCalories)
 
 	return nil
 }
@@ -85,7 +90,7 @@ func loadData(file *bufio.Scanner) (map[string]int, error) {
 	return data, err
 }
 
-func getResult(data map[string]int) int {
+func getResultTopCalories(data map[string]int) int {
 	var result int
 
 	for _, calories := range data {
@@ -93,6 +98,37 @@ func getResult(data map[string]int) int {
 			result = calories
 		}
 	}
+
+	return result
+}
+
+func getTopThreeSum(calories []int) int {
+	var sum int
+
+	end := len(calories)
+	var start int
+
+	if len(calories) > 3 {
+		start += end - 3
+	}
+
+	for _, calorie := range calories[start:end] {
+		sum += calorie
+	}
+
+	return sum
+}
+
+func getResultTopThreeCalories(data map[string]int) int {
+	totals := []int{}
+
+	for _, calories := range data {
+		totals = append(totals, calories)
+	}
+
+	sort.Ints(totals)
+
+	result := getTopThreeSum(totals)
 
 	return result
 }
