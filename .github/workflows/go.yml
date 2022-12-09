@@ -18,7 +18,7 @@ env:
   GH_BASE_REF: ${{ github.base_ref }}
   GH_HEAD_REF: ${{ github.head_ref }}
   CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-  GH_REPO_URL: github.com/vpayno/powerful-cli-apps-in-go-workspace
+  GH_REPO_URL: github.com:vpayno/adventofcode-2022-golang-workspace
   GOCYCLO_OVER_THRESHOLD: 15
   OCTOCOV_VERSION: "0.40.1"
   REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
