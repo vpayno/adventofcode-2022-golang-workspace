@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"io"
 	"os"
 	"testing"
 )
@@ -15,5 +17,34 @@ func TestMain(m *testing.M) {
 func TestMain_app(t *testing.T) {
 	os.Args = []string{}
 
+	testStdout, writer, err := os.Pipe()
+	if err != nil {
+		t.Errorf("os.Pipe() err %v; want %v", err, nil)
+	}
+
+	osStdout := os.Stdout // keep backup of the real stdout
+	os.Stdout = writer
+
+	defer func() {
+		// Undo what we changed when this test is done.
+		os.Stdout = osStdout
+	}()
+
+	want := "67633\n199628\n"
+
+	// Run the function who's output we want to capture.
 	main()
+
+	// Stop capturing stdout.
+	writer.Close()
+
+	var buf bytes.Buffer
+	_, err = io.Copy(&buf, testStdout)
+	if err != nil {
+		t.Error(err)
+	}
+	got := buf.String()
+	if got != want {
+		t.Errorf("main(); want %q, got %q", want, got)
+	}
 }

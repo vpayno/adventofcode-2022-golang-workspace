@@ -1,0 +1,76 @@
+
+14     	func main() {
+15     		// Create the configuration object.
+16     		conf := app.Setup(challengeName)
+17
+18     		// Run the main application.
+19     		err := app.Run(conf)
+20     		if err != nil {
+21 MISS			fmt.Println("Encountered error while running app.Run()")
+22 MISS			fmt.Println()
+23 MISS			fmt.Println(err)
+24
+25     			// Don't panic
+26 MISS			return
+27     		}
+28     	}
+
+
+14     	func Run(conf Config) error {
+15 MISS		file, err := getFile(conf.inputFileName)
+16 MISS		if err != nil {
+17 MISS			return err
+18     		}
+19
+20 MISS		scanner := getScanner(file)
+21
+22 MISS		data, err := loadData(scanner)
+23 MISS		if err != nil {
+24 MISS			return err
+25     		}
+26
+27 MISS		topCalories := getMaxCalories(data)
+28     	
+29 MISS		showResult(topCalories)
+30     	
+31 MISS		topThreeCalories := getResultTopThreeCalories(data)
+32     	
+33 MISS		showResult(topThreeCalories)
+34     	
+35 MISS		return nil
+36     	}
+
+
+63     	func loadData(file *bufio.Scanner) (map[string]int, error) {
+64 MISS		var err error
+65     	
+66 MISS		data := map[string]int{}
+67
+68 MISS		var elfCounter = 1
+69 MISS		var calories int
+70
+71 MISS		for file.Scan() {
+72 MISS			line := file.Text()
+73     	
+74 MISS			elfName := fmt.Sprintf("%s%d", "elf", elfCounter)
+75
+76 MISS			if line == "" {
+77 MISS				elfCounter++
+78 MISS				data[elfName] = calories
+79 MISS				calories = 0
+80
+81 MISS				continue
+82     			}
+83
+84 MISS			calorie, err := strconv.Atoi(line)
+85 MISS			if err != nil {
+86 MISS				return map[string]int{}, err
+87     			}
+88
+89 MISS			calories += calorie
+90     		}
+91
+92 MISS		return data, err
+93     	}
+
+

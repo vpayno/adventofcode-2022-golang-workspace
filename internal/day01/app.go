@@ -3,13 +3,11 @@ package day01
 
 import (
 	"bufio"
-	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
 	"sort"
 	"strconv"
-	"strings"
 )
 
 // Run is called my the gain function. It's basically the main function of the app.
@@ -26,7 +24,7 @@ func Run(conf Config) error {
 		return err
 	}
 
-	topCalories := getResultTopCalories(data)
+	topCalories := getMaxCalories(data)
 
 	showResult(topCalories)
 
@@ -38,11 +36,15 @@ func Run(conf Config) error {
 }
 
 func getFile(fileName string) (*os.File, error) {
-	fileName = filepath.Clean(fileName)
-
-	if !strings.HasPrefix(fileName, "data/day") {
-		return nil, errors.New("unsafe file path")
+	fileRoot, err := os.Getwd()
+	if err != nil {
+		return nil, err
 	}
+
+	fileRoot = filepath.Clean(fileRoot + "/../../")
+	fileName = filepath.Clean(fileRoot + "/" + fileName)
+
+	// strings.HasPrefix() is pointless since we're generating the full path.
 
 	// https://securego.io/docs/rules/g304.html - this gosec check seems to want
 	// panic() calls
@@ -90,7 +92,7 @@ func loadData(file *bufio.Scanner) (map[string]int, error) {
 	return data, err
 }
 
-func getResultTopCalories(data map[string]int) int {
+func getMaxCalories(data map[string]int) int {
 	var result int
 
 	for _, calories := range data {
@@ -105,14 +107,15 @@ func getResultTopCalories(data map[string]int) int {
 func getTopThreeSum(calories []int) int {
 	var sum int
 
-	end := len(calories)
 	var start int
 
 	if len(calories) > 3 {
-		start += end - 3
+		start += len(calories) - 3
 	}
 
-	for _, calorie := range calories[start:end] {
+	sort.Ints(calories)
+
+	for _, calorie := range calories[start:] {
 		sum += calorie
 	}
 
@@ -125,8 +128,6 @@ func getResultTopThreeCalories(data map[string]int) int {
 	for _, calories := range data {
 		totals = append(totals, calories)
 	}
-
-	sort.Ints(totals)
 
 	result := getTopThreeSum(totals)
 

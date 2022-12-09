@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>day01: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day01/aoc-day01.go (42.9%)</option>
+				
+				<option value="file1">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go (50.0%)</option>
+				
+				<option value="file2">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/init.go (100.0%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">no coverage</span>
+				<span class="cov1">low coverage</span>
+				<span class="cov2">*</span>
+				<span class="cov3">*</span>
+				<span class="cov4">*</span>
+				<span class="cov5">*</span>
+				<span class="cov6">*</span>
+				<span class="cov7">*</span>
+				<span class="cov8">*</span>
+				<span class="cov9">*</span>
+				<span class="cov10">high coverage</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">// Package main is the cli module for the application.
+package main
+
+import (
+        "fmt"
+
+        app "github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01"
+
+        _ "embed"
+)
+
+var challengeName = "day01"
+
+func main() <span class="cov8" title="1">{
+        // Create the configuration object.
+        conf := app.Setup(challengeName)
+
+        // Run the main application.
+        err := app.Run(conf)
+        if err != nil </span><span class="cov0" title="0">{
+                fmt.Println("Encountered error while running app.Run()")
+                fmt.Println()
+                fmt.Println(err)
+
+                // Don't panic
+                return
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">// Package day01 is the module with the cli logic for the application.
+package day01
+
+import (
+        "bufio"
+        "fmt"
+        "os"
+        "path/filepath"
+        "sort"
+        "strconv"
+)
+
+// Run is called my the gain function. It's basically the main function of the app.
+func Run(conf Config) error <span class="cov0" title="0">{
+        file, err := getFile(conf.inputFileName)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">scanner := getScanner(file)
+
+        data, err := loadData(scanner)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">topCalories := getMaxCalories(data)
+
+        showResult(topCalories)
+
+        topThreeCalories := getResultTopThreeCalories(data)
+
+        showResult(topThreeCalories)
+
+        return nil</span>
+}
+
+func getFile(fileName string) (*os.File, error) <span class="cov7" title="4">{
+        fileRoot, err := os.Getwd()
+        if err != nil </span><span class="cov1" title="1">{
+                return nil, err
+        }</span>
+
+        <span class="cov6" title="3">fileRoot = filepath.Clean(fileRoot + "/../../")
+        fileName = filepath.Clean(fileRoot + "/" + fileName)
+
+        // strings.HasPrefix() is pointless since we're generating the full path.
+
+        // https://securego.io/docs/rules/g304.html - this gosec check seems to want
+        // panic() calls
+        file, err := os.Open(fileName) // #nosec
+
+        return file, err</span>
+}
+
+func getScanner(file *os.File) *bufio.Scanner <span class="cov1" title="1">{
+        scanner := bufio.NewScanner(file)
+        scanner.Split(bufio.ScanLines)
+
+        return scanner
+}</span>
+
+func loadData(file *bufio.Scanner) (map[string]int, error) <span class="cov0" title="0">{
+        var err error
+
+        data := map[string]int{}
+
+        var elfCounter = 1
+        var calories int
+
+        for file.Scan() </span><span class="cov0" title="0">{
+                line := file.Text()
+
+                elfName := fmt.Sprintf("%s%d", "elf", elfCounter)
+
+                if line == "" </span><span class="cov0" title="0">{
+                        elfCounter++
+                        data[elfName] = calories
+                        calories = 0
+
+                        continue</span>
+                }
+
+                <span class="cov0" title="0">calorie, err := strconv.Atoi(line)
+                if err != nil </span><span class="cov0" title="0">{
+                        return map[string]int{}, err
+                }</span>
+
+                <span class="cov0" title="0">calories += calorie</span>
+        }
+
+        <span class="cov0" title="0">return data, err</span>
+}
+
+func getMaxCalories(data map[string]int) int <span class="cov1" title="1">{
+        var result int
+
+        for _, calories := range data </span><span class="cov6" title="3">{
+                if calories &gt; result </span><span class="cov4" title="2">{
+                        result = calories
+                }</span>
+        }
+
+        <span class="cov1" title="1">return result</span>
+}
+
+func getTopThreeSum(calories []int) int <span class="cov4" title="2">{
+        var sum int
+
+        var start int
+
+        if len(calories) &gt; 3 </span><span class="cov4" title="2">{
+                start += len(calories) - 3
+        }</span>
+
+        <span class="cov4" title="2">sort.Ints(calories)
+
+        for _, calorie := range calories[start:] </span><span class="cov10" title="6">{
+                sum += calorie
+        }</span>
+
+        <span class="cov4" title="2">return sum</span>
+}
+
+func getResultTopThreeCalories(data map[string]int) int <span class="cov1" title="1">{
+        totals := []int{}
+
+        for _, calories := range data </span><span class="cov9" title="5">{
+                totals = append(totals, calories)
+        }</span>
+
+        <span class="cov1" title="1">result := getTopThreeSum(totals)
+
+        return result</span>
+}
+
+func showResult(result int) <span class="cov1" title="1">{
+        fmt.Printf("%d\n", result)
+}</span>
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">// Package day01 is the module with the cli logic for the cmd application.
+package day01
+
+// Config holds the application's configuration.
+type Config struct {
+        appName       string
+        inputFileName string
+}
+
+// Setup creates the applications configuration object.
+func Setup(appName string) Config <span class="cov8" title="1">{
+
+        conf := Config{
+                appName:       appName,
+                inputFileName: "data/" + appName + "/" + appName + "-input.txt",
+        }
+
+        return conf
+}</span>
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

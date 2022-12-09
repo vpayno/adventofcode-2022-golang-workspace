@@ -12,7 +12,7 @@ func Setup(appName string) Config {
 
 	conf := Config{
 		appName:       appName,
-		inputFileName: "./data/" + appName + "/" + appName + "-input.txt",
+		inputFileName: "data/" + appName + "/" + appName + "-input.txt",
 	}
 
 	return conf
