@@ -55,9 +55,9 @@
 			<div id="nav">
 				<select id="files">
 				
-				<option value="file0">github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day01/aoc-day01.go (42.9%)</option>
+				<option value="file0">github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day01/aoc-day01.go (100.0%)</option>
 				
-				<option value="file1">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go (50.0%)</option>
+				<option value="file1">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go (96.6%)</option>
 				
 				<option value="file2">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/init.go (100.0%)</option>
 				
@@ -89,19 +89,17 @@ import (
         "fmt"
 
         app "github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01"
-
-        _ "embed"
 )
 
 var challengeName = "day01"
 
-func main() <span class="cov8" title="1">{
+func main() <span class="cov10" title="2">{
         // Create the configuration object.
         conf := app.Setup(challengeName)
 
         // Run the main application.
         err := app.Run(conf)
-        if err != nil </span><span class="cov0" title="0">{
+        if err != nil </span><span class="cov1" title="1">{
                 fmt.Println("Encountered error while running app.Run()")
                 fmt.Println()
                 fmt.Println(err)
@@ -125,20 +123,20 @@ import (
 )
 
 // Run is called my the gain function. It's basically the main function of the app.
-func Run(conf Config) error <span class="cov0" title="0">{
+func Run(conf Config) error <span class="cov1" title="2">{
         file, err := getFile(conf.inputFileName)
-        if err != nil </span><span class="cov0" title="0">{
+        if err != nil </span><span class="cov1" title="1">{
                 return err
         }</span>
 
-        <span class="cov0" title="0">scanner := getScanner(file)
+        <span class="cov1" title="1">scanner := getScanner(file)
 
         data, err := loadData(scanner)
         if err != nil </span><span class="cov0" title="0">{
                 return err
         }</span>
 
-        <span class="cov0" title="0">topCalories := getMaxCalories(data)
+        <span class="cov1" title="1">topCalories := getMaxCalories(data)
 
         showResult(topCalories)
 
@@ -149,13 +147,13 @@ func Run(conf Config) error <span class="cov0" title="0">{
         return nil</span>
 }
 
-func getFile(fileName string) (*os.File, error) <span class="cov7" title="4">{
+func getFile(fileName string) (*os.File, error) <span class="cov3" title="7">{
         fileRoot, err := os.Getwd()
         if err != nil </span><span class="cov1" title="1">{
                 return nil, err
         }</span>
 
-        <span class="cov6" title="3">fileRoot = filepath.Clean(fileRoot + "/../../")
+        <span class="cov2" title="6">fileRoot = filepath.Clean(fileRoot + "/../../")
         fileName = filepath.Clean(fileRoot + "/" + fileName)
 
         // strings.HasPrefix() is pointless since we're generating the full path.
@@ -167,14 +165,14 @@ func getFile(fileName string) (*os.File, error) <span class="cov7" title="4">{
         return file, err</span>
 }
 
-func getScanner(file *os.File) *bufio.Scanner <span class="cov1" title="1">{
+func getScanner(file *os.File) *bufio.Scanner <span class="cov2" title="3">{
         scanner := bufio.NewScanner(file)
         scanner.Split(bufio.ScanLines)
 
         return scanner
 }</span>
 
-func loadData(file *bufio.Scanner) (map[string]int, error) <span class="cov0" title="0">{
+func loadData(file *bufio.Scanner) (map[string]int, error) <span class="cov1" title="2">{
         var err error
 
         data := map[string]int{}
@@ -182,12 +180,12 @@ func loadData(file *bufio.Scanner) (map[string]int, error) <span class="cov0" ti
         var elfCounter = 1
         var calories int
 
-        for file.Scan() </span><span class="cov0" title="0">{
+        for file.Scan() </span><span class="cov10" title="4474">{
                 line := file.Text()
 
                 elfName := fmt.Sprintf("%s%d", "elf", elfCounter)
 
-                if line == "" </span><span class="cov0" title="0">{
+                if line == "" </span><span class="cov7" title="482">{
                         elfCounter++
                         data[elfName] = calories
                         calories = 0
@@ -195,60 +193,60 @@ func loadData(file *bufio.Scanner) (map[string]int, error) <span class="cov0" ti
                         continue</span>
                 }
 
-                <span class="cov0" title="0">calorie, err := strconv.Atoi(line)
+                <span class="cov9" title="3992">calorie, err := strconv.Atoi(line)
                 if err != nil </span><span class="cov0" title="0">{
                         return map[string]int{}, err
                 }</span>
 
-                <span class="cov0" title="0">calories += calorie</span>
+                <span class="cov9" title="3992">calories += calorie</span>
         }
 
-        <span class="cov0" title="0">return data, err</span>
+        <span class="cov1" title="2">return data, err</span>
 }
 
-func getMaxCalories(data map[string]int) int <span class="cov1" title="1">{
+func getMaxCalories(data map[string]int) int <span class="cov1" title="2">{
         var result int
 
-        for _, calories := range data </span><span class="cov6" title="3">{
-                if calories &gt; result </span><span class="cov4" title="2">{
+        for _, calories := range data </span><span class="cov6" title="246">{
+                if calories &gt; result </span><span class="cov3" title="12">{
                         result = calories
                 }</span>
         }
 
-        <span class="cov1" title="1">return result</span>
+        <span class="cov1" title="2">return result</span>
 }
 
-func getTopThreeSum(calories []int) int <span class="cov4" title="2">{
+func getTopThreeSum(calories []int) int <span class="cov2" title="3">{
         var sum int
 
         var start int
 
-        if len(calories) &gt; 3 </span><span class="cov4" title="2">{
+        if len(calories) &gt; 3 </span><span class="cov2" title="3">{
                 start += len(calories) - 3
         }</span>
 
-        <span class="cov4" title="2">sort.Ints(calories)
+        <span class="cov2" title="3">sort.Ints(calories)
 
-        for _, calorie := range calories[start:] </span><span class="cov10" title="6">{
+        for _, calorie := range calories[start:] </span><span class="cov3" title="9">{
                 sum += calorie
         }</span>
 
-        <span class="cov4" title="2">return sum</span>
+        <span class="cov2" title="3">return sum</span>
 }
 
-func getResultTopThreeCalories(data map[string]int) int <span class="cov1" title="1">{
+func getResultTopThreeCalories(data map[string]int) int <span class="cov1" title="2">{
         totals := []int{}
 
-        for _, calories := range data </span><span class="cov9" title="5">{
+        for _, calories := range data </span><span class="cov6" title="246">{
                 totals = append(totals, calories)
         }</span>
 
-        <span class="cov1" title="1">result := getTopThreeSum(totals)
+        <span class="cov1" title="2">result := getTopThreeSum(totals)
 
         return result</span>
 }
 
-func showResult(result int) <span class="cov1" title="1">{
+func showResult(result int) <span class="cov2" title="3">{
         fmt.Printf("%d\n", result)
 }</span>
 </pre>
@@ -263,7 +261,7 @@ type Config struct {
 }
 
 // Setup creates the applications configuration object.
-func Setup(appName string) Config <span class="cov8" title="1">{
+func Setup(appName string) Config <span class="cov10" title="3">{
 
         conf := Config{
                 appName:       appName,
