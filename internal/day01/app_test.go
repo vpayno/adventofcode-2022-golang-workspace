@@ -74,7 +74,7 @@ func TestGetFile_NoCW(t *testing.T) {
 	assert.NotNil(t, err, "getFile() should have failed here")
 
 	err = os.Chdir(wd)
-	assert.Nil(t, err, "failed to return to the orginal working directory")
+	assert.Nil(t, err, "failed to return to the original working directory")
 }
 
 func TestGetScanner(t *testing.T) {
