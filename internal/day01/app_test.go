@@ -27,7 +27,11 @@ func TestRun(t *testing.T) {
 	conf := Setup("day01")
 
 	err := Run(conf)
-	assert.Nil(t, err, "Run() returned an error")
+	var cause string
+	if err != nil {
+		cause = err.Error()
+	}
+	assert.Nil(t, err, cause)
 }
 
 func TestRun_fileError(t *testing.T) {
@@ -35,14 +39,25 @@ func TestRun_fileError(t *testing.T) {
 	conf := Setup("day00")
 
 	err := Run(conf)
-	assert.NotNil(t, err, "Run() didn't fail")
+	assert.NotNil(t, err, "Run() didn't fail with a can't find file error")
+}
+
+func TestRun_badData(t *testing.T) {
+	// this tests fails because it can't find the file
+	conf := Setup("day01")
+
+	// Give it bad data.
+	conf.inputFileName = "data/day01/day01-input-bad_data.txt"
+
+	err := Run(conf)
+	assert.NotNil(t, err, "Run() didn't fail with a bad data error")
 }
 
 func TestGetFile(t *testing.T) {
 	fileName := "data/day01/day01-input.txt"
 
 	fileRoot, err := os.Getwd()
-	assert.Nil(t, err, "failed to get CWD")
+	assert.Nil(t, err, err)
 
 	fileRoot = filepath.Clean(fileRoot + "/../../")
 	testFile := fileRoot + "/" + fileName
@@ -59,34 +74,45 @@ func TestGetFile(t *testing.T) {
 
 func TestGetFile_NoCW(t *testing.T) {
 	wd, err := os.Getwd()
-	assert.Nil(t, err, "failed to get CWD, should always work here")
+	assert.Nil(t, err, err)
 
 	tmpDir, err := os.MkdirTemp("/tmp", "TestGetFile_NoCW")
-	assert.Nil(t, err, "failed to create temporary directory")
+	assert.Nil(t, err, err)
 
 	err = os.Chdir(tmpDir)
-	assert.Nil(t, err, "failed to cd to temporary directory")
+	assert.Nil(t, err, err)
 
 	err = os.Remove(tmpDir)
-	assert.Nil(t, err, "failed to remove temporary directory")
+	assert.Nil(t, err, err)
 
 	_, err = getFile("data/day01/day01-input.txt")
 	assert.NotNil(t, err, "getFile() should have failed here")
 
 	err = os.Chdir(wd)
-	assert.Nil(t, err, "failed to return to the original working directory")
+	var cause string
+	if err != nil {
+		cause = err.Error()
+	}
+	assert.Nil(t, err, "failed to return to the original working directory: "+cause)
 }
 
 func TestGetScanner(t *testing.T) {
 	fileName := "data/day01/day01-input.txt"
 
 	wantScanner, wantErr := getFile(fileName)
-	assert.Nil(t, wantErr, "failed to get wantScanner")
+	var cause string
+	if wantErr != nil {
+		cause = wantErr.Error()
+	}
+	assert.Nil(t, wantErr, "failed to get wantScanner: "+cause)
 
 	want := bufio.NewScanner(wantScanner)
 
 	gotScanner, gotErr := getFile(fileName)
-	assert.Nil(t, gotErr, "failed to get gotScanner")
+	if gotErr != nil {
+		cause = gotErr.Error()
+	}
+	assert.Nil(t, gotErr, "failed to get gotScanner: "+cause)
 
 	got := getScanner(gotScanner)
 
@@ -117,18 +143,30 @@ func TestLoadData(t *testing.T) {
 	fileName := "data/day01/day01-input.txt"
 
 	file, err := getFile(fileName)
-	assert.Nil(t, err, "failed to get file")
+	assert.Nil(t, err, err)
 
 	scanner := getScanner(file)
 
 	got, err := loadData(scanner)
-	assert.Nil(t, err, "failed to load file")
+	assert.Nil(t, err, err)
 
 	for key, wantValue := range want {
 		gotValue, gotFound := got[key]
 		assert.True(t, gotFound, "wanted key, "+key+", not found in dictionary")
 		assert.Equal(t, wantValue, gotValue, "want/got values don't match for key ["+key+"]")
 	}
+}
+
+func TestLoadData_badFile(t *testing.T) {
+	fileName := "data/day01/day01-input-bad_data.txt"
+
+	file, err := getFile(fileName)
+	assert.Nil(t, err, err)
+
+	scanner := getScanner(file)
+
+	_, err = loadData(scanner)
+	assert.NotNil(t, err, err)
 }
 
 func TestGetMaxCalories(t *testing.T) {

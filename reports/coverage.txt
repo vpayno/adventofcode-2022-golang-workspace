@@ -1,11 +1,11 @@
 github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day01/aoc-day01.go:12:	main				100.0%
-github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go:14:	Run				91.7%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go:14:	Run				100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go:38:	getFile				100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go:56:	getScanner			100.0%
-github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go:63:	loadData			94.1%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go:63:	loadData			100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go:95:	getMaxCalories			100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go:107:	getTopThreeSum			100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go:125:	getResultTopThreeCalories	100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go:137:	showResult			100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/init.go:11:	Setup				100.0%
-total:										(statements)			97.0%
+total:										(statements)			100.0%

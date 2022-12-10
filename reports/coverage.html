@@ -57,7 +57,7 @@
 				
 				<option value="file0">github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day01/aoc-day01.go (100.0%)</option>
 				
-				<option value="file1">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go (96.6%)</option>
+				<option value="file1">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go (100.0%)</option>
 				
 				<option value="file2">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/init.go (100.0%)</option>
 				
@@ -123,16 +123,16 @@ import (
 )
 
 // Run is called my the gain function. It's basically the main function of the app.
-func Run(conf Config) error <span class="cov1" title="2">{
+func Run(conf Config) error <span class="cov2" title="3">{
         file, err := getFile(conf.inputFileName)
         if err != nil </span><span class="cov1" title="1">{
                 return err
         }</span>
 
-        <span class="cov1" title="1">scanner := getScanner(file)
+        <span class="cov1" title="2">scanner := getScanner(file)
 
         data, err := loadData(scanner)
-        if err != nil </span><span class="cov0" title="0">{
+        if err != nil </span><span class="cov1" title="1">{
                 return err
         }</span>
 
@@ -147,13 +147,13 @@ func Run(conf Config) error <span class="cov1" title="2">{
         return nil</span>
 }
 
-func getFile(fileName string) (*os.File, error) <span class="cov3" title="7">{
+func getFile(fileName string) (*os.File, error) <span class="cov3" title="9">{
         fileRoot, err := os.Getwd()
         if err != nil </span><span class="cov1" title="1">{
                 return nil, err
         }</span>
 
-        <span class="cov2" title="6">fileRoot = filepath.Clean(fileRoot + "/../../")
+        <span class="cov3" title="8">fileRoot = filepath.Clean(fileRoot + "/../../")
         fileName = filepath.Clean(fileRoot + "/" + fileName)
 
         // strings.HasPrefix() is pointless since we're generating the full path.
@@ -165,14 +165,14 @@ func getFile(fileName string) (*os.File, error) <span class="cov3" title="7">{
         return file, err</span>
 }
 
-func getScanner(file *os.File) *bufio.Scanner <span class="cov2" title="3">{
+func getScanner(file *os.File) *bufio.Scanner <span class="cov2" title="5">{
         scanner := bufio.NewScanner(file)
         scanner.Split(bufio.ScanLines)
 
         return scanner
 }</span>
 
-func loadData(file *bufio.Scanner) (map[string]int, error) <span class="cov1" title="2">{
+func loadData(file *bufio.Scanner) (map[string]int, error) <span class="cov2" title="4">{
         var err error
 
         data := map[string]int{}
@@ -180,7 +180,7 @@ func loadData(file *bufio.Scanner) (map[string]int, error) <span class="cov1" ti
         var elfCounter = 1
         var calories int
 
-        for file.Scan() </span><span class="cov10" title="4474">{
+        for file.Scan() </span><span class="cov10" title="4482">{
                 line := file.Text()
 
                 elfName := fmt.Sprintf("%s%d", "elf", elfCounter)
@@ -193,12 +193,12 @@ func loadData(file *bufio.Scanner) (map[string]int, error) <span class="cov1" ti
                         continue</span>
                 }
 
-                <span class="cov9" title="3992">calorie, err := strconv.Atoi(line)
-                if err != nil </span><span class="cov0" title="0">{
+                <span class="cov9" title="4000">calorie, err := strconv.Atoi(line)
+                if err != nil </span><span class="cov1" title="2">{
                         return map[string]int{}, err
                 }</span>
 
-                <span class="cov9" title="3992">calories += calorie</span>
+                <span class="cov9" title="3998">calories += calorie</span>
         }
 
         <span class="cov1" title="2">return data, err</span>
@@ -208,7 +208,7 @@ func getMaxCalories(data map[string]int) int <span class="cov1" title="2">{
         var result int
 
         for _, calories := range data </span><span class="cov6" title="246">{
-                if calories &gt; result </span><span class="cov3" title="12">{
+                if calories &gt; result </span><span class="cov3" title="8">{
                         result = calories
                 }</span>
         }
@@ -261,7 +261,7 @@ type Config struct {
 }
 
 // Setup creates the applications configuration object.
-func Setup(appName string) Config <span class="cov10" title="3">{
+func Setup(appName string) Config <span class="cov10" title="4">{
 
         conf := Config{
                 appName:       appName,

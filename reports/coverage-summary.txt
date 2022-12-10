@@ -2,6 +2,8 @@
 github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day01/aoc-day01.go	 main	 100.00% (7/7)
 github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day01			 ----	 100.00% (7/7)
 
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go	 loadData			 100.00% (17/17)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go	 Run				 100.00% (12/12)
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go	 getTopThreeSum			 100.00% (8/8)
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go	 getFile			 100.00% (7/7)
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go	 getMaxCalories			 100.00% (5/5)
@@ -9,8 +11,6 @@ github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go	 getR
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go	 getScanner			 100.00% (3/3)
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/init.go	 Setup				 100.00% (2/2)
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go	 showResult			 100.00% (1/1)
-github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go	 loadData			 94.12% (16/17)
-github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go	 Run				 91.67% (11/12)
-github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01		 -------------------------	 96.67% (58/60)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01		 -------------------------	 100.00% (60/60)
 
-Total Coverage: 97.01% (65/67)
+Total Coverage: 100.00% (67/67)
