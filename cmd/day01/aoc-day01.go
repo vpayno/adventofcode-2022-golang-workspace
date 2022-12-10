@@ -5,8 +5,6 @@ import (
 	"fmt"
 
 	app "github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01"
-
-	_ "embed"
 )
 
 var challengeName = "day01"
