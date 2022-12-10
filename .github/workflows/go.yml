@@ -18,7 +18,7 @@ env:
   GH_BASE_REF: ${{ github.base_ref }}
   GH_HEAD_REF: ${{ github.head_ref }}
   CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-  GH_REPO_URL: github.com:vpayno/adventofcode-2022-golang-workspace
+  GH_REPO_URL: github.com/vpayno/adventofcode-2022-golang-workspace
   GOCYCLO_OVER_THRESHOLD: 15
   OCTOCOV_VERSION: "0.40.1"
   REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -245,6 +245,10 @@ jobs:
         id: go-code-climate-code-coverage-setup
         if: matrix.os == 'ubuntu-latest'
         run: |
+          if [[ ${GH_REPO_URL} =~ ^github.com:.*$ ]]; then
+            printf "WARN: GH_REPO_URL [%s] has a colon in it.\n" "${GH_REPO_URL}"
+            GH_REPO_URL="${GH_REPO_URL//:/\/}"
+          fi
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
           chmod -v a+x ./cc-test-reporter
           ./cc-test-reporter before-build
