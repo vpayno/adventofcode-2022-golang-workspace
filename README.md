@@ -30,3 +30,9 @@
 
 - [Description](./calendar/day01-description.md)
 - [Input Data](./data/day01/day01-input.txt)
+
+
+### Day 02 - Rock, Paper, Scissors
+
+- [Description](./calendar/day02-description.md)
+- [Input Data](./data/day02/day02-input.txt)
