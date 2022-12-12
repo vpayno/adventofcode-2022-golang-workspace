@@ -1,4 +1,5 @@
 github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day01/aoc-day01.go:12:	main				100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day02/aoc-day02.go:12:	main				100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go:14:	Run				100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go:38:	getFile				100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go:56:	getScanner			100.0%
@@ -8,4 +9,14 @@ github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go:107:	
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go:125:	getResultTopThreeCalories	100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go:137:	showResult			100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/init.go:11:	Setup				100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go:13:	Run				100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go:33:	getFile				100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go:51:	getScanner			100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go:58:	loadData			100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go:88:	getTotalScore			100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go:98:	showResult			100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go:60:	judge				100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go:80:	score				100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go:84:	update				100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go:92:	Setup				100.0%
 total:										(statements)			100.0%

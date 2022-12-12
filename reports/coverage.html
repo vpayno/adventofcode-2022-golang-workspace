@@ -57,9 +57,15 @@
 				
 				<option value="file0">github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day01/aoc-day01.go (100.0%)</option>
 				
-				<option value="file1">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go (100.0%)</option>
+				<option value="file1">github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day02/aoc-day02.go (100.0%)</option>
 				
-				<option value="file2">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/init.go (100.0%)</option>
+				<option value="file2">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go (100.0%)</option>
+				
+				<option value="file3">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/init.go (100.0%)</option>
+				
+				<option value="file4">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go (100.0%)</option>
+				
+				<option value="file5">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go (100.0%)</option>
 				
 				</select>
 			</div>
@@ -110,7 +116,35 @@ func main() <span class="cov10" title="2">{
 }
 </pre>
 		
-		<pre class="file" id="file1" style="display: none">// Package day01 is the module with the cli logic for the application.
+		<pre class="file" id="file1" style="display: none">// Package main is the cli module for the application.
+package main
+
+import (
+        "fmt"
+
+        app "github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02"
+)
+
+var challengeName = "day02"
+
+func main() <span class="cov10" title="2">{
+        // Create the configuration object.
+        conf := app.Setup(challengeName)
+
+        // Run the main application.
+        err := app.Run(conf)
+        if err != nil </span><span class="cov1" title="1">{
+                fmt.Println("Encountered error while running app.Run()")
+                fmt.Println()
+                fmt.Println(err)
+
+                // Don't panic
+                return
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">// Package day01 is the module with the cli logic for the application.
 package day01
 
 import (
@@ -208,7 +242,7 @@ func getMaxCalories(data map[string]int) int <span class="cov1" title="2">{
         var result int
 
         for _, calories := range data </span><span class="cov6" title="246">{
-                if calories &gt; result </span><span class="cov3" title="8">{
+                if calories &gt; result </span><span class="cov3" title="10">{
                         result = calories
                 }</span>
         }
@@ -251,7 +285,7 @@ func showResult(result int) <span class="cov2" title="3">{
 }</span>
 </pre>
 		
-		<pre class="file" id="file2" style="display: none">// Package day01 is the module with the cli logic for the cmd application.
+		<pre class="file" id="file3" style="display: none">// Package day01 is the module with the cli logic for the cmd application.
 package day01
 
 // Config holds the application's configuration.
@@ -262,6 +296,210 @@ type Config struct {
 
 // Setup creates the applications configuration object.
 func Setup(appName string) Config <span class="cov10" title="4">{
+
+        conf := Config{
+                appName:       appName,
+                inputFileName: "data/" + appName + "/" + appName + "-input.txt",
+        }
+
+        return conf
+}</span>
+</pre>
+		
+		<pre class="file" id="file4" style="display: none">// Package day02 is the module with the cli logic for the application.
+package day02
+
+import (
+        "bufio"
+        "fmt"
+        "os"
+        "path/filepath"
+        "strings"
+)
+
+// Run is called my the gain function. It's basically the main function of the app.
+func Run(conf Config) error <span class="cov2" title="3">{
+        file, err := getFile(conf.inputFileName)
+        if err != nil </span><span class="cov1" title="1">{
+                return err
+        }</span>
+
+        <span class="cov1" title="2">scanner := getScanner(file)
+
+        data, err := loadData(scanner)
+        if err != nil </span><span class="cov1" title="1">{
+                return err
+        }</span>
+
+        <span class="cov1" title="1">totalScore := getTotalScore(data)
+
+        showResult(totalScore)
+
+        return nil</span>
+}
+
+func getFile(fileName string) (*os.File, error) <span class="cov3" title="9">{
+        fileRoot, err := os.Getwd()
+        if err != nil </span><span class="cov1" title="1">{
+                return nil, err
+        }</span>
+
+        <span class="cov3" title="8">fileRoot = filepath.Clean(fileRoot + "/../../")
+        fileName = filepath.Clean(fileRoot + "/" + fileName)
+
+        // strings.HasPrefix() is pointless since we're generating the full path.
+
+        // https://securego.io/docs/rules/g304.html - this gosec check seems to want
+        // panic() calls
+        file, err := os.Open(fileName) // #nosec
+
+        return file, err</span>
+}
+
+func getScanner(file *os.File) *bufio.Scanner <span class="cov2" title="5">{
+        scanner := bufio.NewScanner(file)
+        scanner.Split(bufio.ScanLines)
+
+        return scanner
+}</span>
+
+func loadData(file *bufio.Scanner) (rounds, error) <span class="cov2" title="4">{
+        var err error
+
+        data := rounds{}
+
+        for file.Scan() </span><span class="cov10" title="5018">{
+                line := file.Text()
+
+                if line == "" </span><span class="cov1" title="2">{
+                        continue</span>
+                }
+
+                <span class="cov9" title="5016">s := strings.Fields(line)
+
+                if len(s) != 2 </span><span class="cov1" title="2">{
+                        err := fmt.Errorf("wrong number of records: has %d, need %d", len(s), 2)
+                        return []round{}, err
+                }</span>
+
+                <span class="cov9" title="5014">r := round{
+                        them: string2move[s[them]],
+                        you:  string2move[s[you]],
+                }
+
+                data = append(data, r)</span>
+        }
+
+        <span class="cov1" title="2">return data, err</span>
+}
+
+func getTotalScore(data rounds) int <span class="cov1" title="2">{
+        var result int
+
+        for _, r := range data </span><span class="cov9" title="2503">{
+                result += r.score()
+        }</span>
+
+        <span class="cov1" title="2">return result</span>
+}
+
+func showResult(result int) <span class="cov1" title="2">{
+        fmt.Printf("%d\n", result)
+}</span>
+</pre>
+		
+		<pre class="file" id="file5" style="display: none">// Package day02 is the module with the cli logic for the cmd application.
+package day02
+
+// Config holds the application's configuration.
+type Config struct {
+        appName       string
+        inputFileName string
+}
+
+const (
+        them int = iota
+        you
+)
+
+// Outcome describes the possible outcomes.
+type outcome int
+
+const (
+        loose outcome = 0
+        draw  outcome = 3
+        win   outcome = 6
+)
+
+var outcomeNames = map[outcome]string{
+        loose: "loose",
+        draw:  "draw",
+        win:   "win",
+}
+
+// Move descrives possible moves.
+type move int
+
+const (
+        rock     move = 1
+        paper    move = 2
+        scissors move = 3
+)
+
+var moveNames = map[move]string{
+        rock:     "rock",
+        paper:    "paper",
+        scissors: "scissors",
+}
+
+var string2move = map[string]move{
+        "A": rock,
+        "B": paper,
+        "C": scissors,
+        "X": rock,
+        "Y": paper,
+        "Z": scissors,
+}
+
+// Round describes one round of rock-paper-scissors.
+type round struct {
+        them move
+        you  move
+}
+
+func (r *round) judge() outcome <span class="cov10" title="2521">{
+        if r.you == r.them </span><span class="cov9" title="1096">{
+                return draw
+        }</span>
+
+        <span class="cov9" title="1425">if r.you == rock &amp;&amp; r.them == scissors </span><span class="cov5" title="45">{
+                return win
+        }</span>
+
+        <span class="cov9" title="1380">if r.you == paper &amp;&amp; r.them == rock </span><span class="cov6" title="184">{
+                return win
+        }</span>
+
+        <span class="cov9" title="1196">if r.you == scissors &amp;&amp; r.them == paper </span><span class="cov7" title="225">{
+                return win
+        }</span>
+
+        <span class="cov8" title="971">return loose</span>
+}
+
+func (r *round) score() int <span class="cov9" title="2512">{
+        return int(r.judge()) + int(r.you)
+}</span>
+
+func (r *round) update(slice []move) <span class="cov1" title="1">{
+        r.them = slice[them]
+        r.you = slice[you]
+}</span>
+
+type rounds []round
+
+// Setup creates the applications configuration object.
+func Setup(appName string) Config <span class="cov2" title="4">{
 
         conf := Config{
                 appName:       appName,

@@ -2,6 +2,9 @@
 github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day01/aoc-day01.go	 main	 100.00% (7/7)
 github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day01			 ----	 100.00% (7/7)
 
+github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day02/aoc-day02.go	 main	 100.00% (7/7)
+github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day02			 ----	 100.00% (7/7)
+
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go	 loadData			 100.00% (17/17)
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go	 Run				 100.00% (12/12)
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go	 getTopThreeSum			 100.00% (8/8)
@@ -13,4 +16,16 @@ github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/init.go	 Set
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go	 showResult			 100.00% (1/1)
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01		 -------------------------	 100.00% (60/60)
 
-Total Coverage: 100.00% (67/67)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go	 loadData	 100.00% (13/13)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go	 Run		 100.00% (10/10)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go	 round.judge	 100.00% (9/9)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go	 getFile	 100.00% (7/7)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go	 getTotalScore	 100.00% (4/4)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go	 getScanner	 100.00% (3/3)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go	 round.update	 100.00% (2/2)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go	 Setup		 100.00% (2/2)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go	 showResult	 100.00% (1/1)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go	 round.score	 100.00% (1/1)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02		 -------------	 100.00% (52/52)
+
+Total Coverage: 100.00% (126/126)
