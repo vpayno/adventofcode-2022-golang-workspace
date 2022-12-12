@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/vpayno/adventofcode-2022-golang-workspace/internal/aocshared"
 )
 
 /*
@@ -64,7 +65,7 @@ func TestGetFile(t *testing.T) {
 
 	wantFile, wantErr := os.Open(testFile)
 
-	gotFile, gotErr := getFile(fileName)
+	gotFile, gotErr := aocshared.GetFile(fileName)
 
 	assert.Nil(t, wantErr, "failed to open wanted file")
 	assert.Nil(t, gotErr, "failed to open got file")
@@ -85,8 +86,8 @@ func TestGetFile_NoCW(t *testing.T) {
 	err = os.Remove(tmpDir)
 	assert.Nil(t, err, err)
 
-	_, err = getFile("data/day01/day01-input.txt")
-	assert.NotNil(t, err, "getFile() should have failed here")
+	_, err = aocshared.GetFile("data/day01/day01-input.txt")
+	assert.NotNil(t, err, "aocshared.GetFile() should have failed here")
 
 	err = os.Chdir(wd)
 	var cause string
@@ -99,7 +100,7 @@ func TestGetFile_NoCW(t *testing.T) {
 func TestGetScanner(t *testing.T) {
 	fileName := "data/day01/day01-input.txt"
 
-	wantScanner, wantErr := getFile(fileName)
+	wantScanner, wantErr := aocshared.GetFile(fileName)
 	var cause string
 	if wantErr != nil {
 		cause = wantErr.Error()
@@ -108,13 +109,13 @@ func TestGetScanner(t *testing.T) {
 
 	want := bufio.NewScanner(wantScanner)
 
-	gotScanner, gotErr := getFile(fileName)
+	gotScanner, gotErr := aocshared.GetFile(fileName)
 	if gotErr != nil {
 		cause = gotErr.Error()
 	}
 	assert.Nil(t, gotErr, "failed to get gotScanner: "+cause)
 
-	got := getScanner(gotScanner)
+	got := aocshared.GetScanner(gotScanner)
 
 	for {
 		if !want.Scan() {
@@ -142,10 +143,10 @@ func TestLoadData(t *testing.T) {
 
 	fileName := "data/day01/day01-input.txt"
 
-	file, err := getFile(fileName)
+	file, err := aocshared.GetFile(fileName)
 	assert.Nil(t, err, err)
 
-	scanner := getScanner(file)
+	scanner := aocshared.GetScanner(file)
 
 	got, err := loadData(scanner)
 	assert.Nil(t, err, err)
@@ -160,10 +161,10 @@ func TestLoadData(t *testing.T) {
 func TestLoadData_badFile(t *testing.T) {
 	fileName := "data/day01/day01-input-bad_data.txt"
 
-	file, err := getFile(fileName)
+	file, err := aocshared.GetFile(fileName)
 	assert.Nil(t, err, err)
 
-	scanner := getScanner(file)
+	scanner := aocshared.GetScanner(file)
 
 	_, err = loadData(scanner)
 	assert.NotNil(t, err, err)
@@ -228,7 +229,7 @@ func TestShowResult(t *testing.T) {
 	want := "1234\n"
 
 	// Run the function who's output we want to capture.
-	showResult(1234)
+	aocshared.ShowResult(1234)
 
 	// Stop capturing stdout.
 	writer.Close()
