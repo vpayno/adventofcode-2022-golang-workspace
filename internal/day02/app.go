@@ -49,9 +49,12 @@ func loadData(file *bufio.Scanner) (rounds, error) {
 			return []round{}, err
 		}
 
+		theirMove := string2move[s[them]]
+		yourGoal := string2outcome[s[goal]]
+
 		r := round{
-			them: string2move[s[them]],
-			you:  string2move[s[you]],
+			them: theirMove,
+			goal: yourGoal,
 		}
 
 		data = append(data, r)

@@ -69,7 +69,7 @@ func TestLoadData(t *testing.T) {
 
 	for _, r := range got {
 		assert.IsType(t, rock, r.them, "their move isn't of type move")
-		assert.IsType(t, rock, r.you, "your move isn't of type move")
+		assert.IsType(t, win, r.goal, "your move isn't of type move")
 	}
 }
 
@@ -87,12 +87,12 @@ func TestLoadData_badFile(t *testing.T) {
 
 func TestGetTotalScore(t *testing.T) {
 	input := rounds{
-		round{them: string2move["A"], you: string2move["Y"]},
-		round{them: string2move["B"], you: string2move["X"]},
-		round{them: string2move["C"], you: string2move["Z"]},
+		round{them: string2move["A"], goal: string2outcome["Y"]},
+		round{them: string2move["B"], goal: string2outcome["X"]},
+		round{them: string2move["C"], goal: string2outcome["Z"]},
 	}
 
-	want := 15
+	want := 12
 
 	got := getTotalScore(input)
 

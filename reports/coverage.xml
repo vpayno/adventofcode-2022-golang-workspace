@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage line-rate="1" branch-rate="0" version="" timestamp="1670814182746" lines-covered="213" lines-valid="213" branches-covered="0" branches-valid="0" complexity="0">
+<coverage line-rate="1" branch-rate="0" version="" timestamp="1670825550384" lines-covered="225" lines-valid="225" branches-covered="0" branches-valid="0" complexity="0">
 	<sources>
 		<source>/home/vpayno/sdk/go1.19/src</source>
 		<source>/home/vpayno/go/src</source>
@@ -223,9 +223,9 @@
 								<line number="71" hits="2"></line>
 								<line number="72" hits="2"></line>
 								<line number="73" hits="2"></line>
-								<line number="74" hits="5"></line>
-								<line number="75" hits="5"></line>
-								<line number="76" hits="5"></line>
+								<line number="74" hits="8"></line>
+								<line number="75" hits="8"></line>
+								<line number="76" hits="8"></line>
 								<line number="79" hits="2"></line>
 							</lines>
 						</method>
@@ -311,9 +311,9 @@
 						<line number="71" hits="2"></line>
 						<line number="72" hits="2"></line>
 						<line number="73" hits="2"></line>
-						<line number="74" hits="5"></line>
-						<line number="75" hits="5"></line>
-						<line number="76" hits="5"></line>
+						<line number="74" hits="8"></line>
+						<line number="75" hits="8"></line>
+						<line number="76" hits="8"></line>
 						<line number="79" hits="2"></line>
 						<line number="82" hits="3"></line>
 						<line number="83" hits="3"></line>
@@ -418,18 +418,21 @@
 								<line number="55" hits="5014"></line>
 								<line number="56" hits="5014"></line>
 								<line number="57" hits="5014"></line>
-								<line number="60" hits="2"></line>
+								<line number="58" hits="5014"></line>
+								<line number="59" hits="5014"></line>
+								<line number="60" hits="5014"></line>
+								<line number="63" hits="2"></line>
 							</lines>
 						</method>
 						<method name="getTotalScore" signature="" line-rate="1" branch-rate="0" complexity="0">
 							<lines>
-								<line number="63" hits="2"></line>
-								<line number="64" hits="2"></line>
-								<line number="65" hits="2"></line>
 								<line number="66" hits="2"></line>
-								<line number="67" hits="2503"></line>
-								<line number="68" hits="2503"></line>
-								<line number="70" hits="2"></line>
+								<line number="67" hits="2"></line>
+								<line number="68" hits="2"></line>
+								<line number="69" hits="2"></line>
+								<line number="70" hits="2503"></line>
+								<line number="71" hits="2503"></line>
+								<line number="73" hits="2"></line>
 							</lines>
 						</method>
 					</methods>
@@ -472,102 +475,123 @@
 						<line number="55" hits="5014"></line>
 						<line number="56" hits="5014"></line>
 						<line number="57" hits="5014"></line>
-						<line number="60" hits="2"></line>
+						<line number="58" hits="5014"></line>
+						<line number="59" hits="5014"></line>
+						<line number="60" hits="5014"></line>
 						<line number="63" hits="2"></line>
-						<line number="64" hits="2"></line>
-						<line number="65" hits="2"></line>
 						<line number="66" hits="2"></line>
-						<line number="67" hits="2503"></line>
-						<line number="68" hits="2503"></line>
-						<line number="70" hits="2"></line>
+						<line number="67" hits="2"></line>
+						<line number="68" hits="2"></line>
+						<line number="69" hits="2"></line>
+						<line number="70" hits="2503"></line>
+						<line number="71" hits="2503"></line>
+						<line number="73" hits="2"></line>
 					</lines>
 				</class>
 				<class name="round" filename="github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go" line-rate="1" branch-rate="0" complexity="0">
 					<methods>
-						<method name="judge" signature="" line-rate="1" branch-rate="0" complexity="0">
+						<method name="yourMove" signature="" line-rate="1" branch-rate="0" complexity="0">
 							<lines>
-								<line number="60" hits="2521"></line>
-								<line number="61" hits="1096"></line>
-								<line number="62" hits="1096"></line>
-								<line number="63" hits="1096"></line>
-								<line number="65" hits="45"></line>
-								<line number="66" hits="45"></line>
-								<line number="67" hits="45"></line>
-								<line number="69" hits="184"></line>
-								<line number="70" hits="184"></line>
-								<line number="71" hits="184"></line>
-								<line number="73" hits="225"></line>
-								<line number="74" hits="225"></line>
-								<line number="75" hits="225"></line>
-								<line number="77" hits="971"></line>
+								<line number="64" hits="2521"></line>
+								<line number="65" hits="2521"></line>
+								<line number="66" hits="2521"></line>
+								<line number="67" hits="2521"></line>
+								<line number="68" hits="411"></line>
+								<line number="69" hits="411"></line>
+								<line number="70" hits="43"></line>
+								<line number="71" hits="43"></line>
+								<line number="72" hits="323"></line>
+								<line number="73" hits="323"></line>
+								<line number="74" hits="45"></line>
+								<line number="75" hits="45"></line>
+								<line number="77" hits="848"></line>
+								<line number="78" hits="848"></line>
+								<line number="79" hits="84"></line>
+								<line number="80" hits="84"></line>
+								<line number="81" hits="225"></line>
+								<line number="82" hits="225"></line>
+								<line number="83" hits="539"></line>
+								<line number="84" hits="539"></line>
+								<line number="86" hits="1262"></line>
+								<line number="87" hits="1262"></line>
+								<line number="90" hits="2521"></line>
 							</lines>
 						</method>
 						<method name="score" signature="" line-rate="1" branch-rate="0" complexity="0">
 							<lines>
-								<line number="80" hits="2512"></line>
-								<line number="81" hits="2512"></line>
-								<line number="82" hits="2512"></line>
+								<line number="93" hits="2512"></line>
+								<line number="94" hits="2512"></line>
+								<line number="95" hits="2512"></line>
 							</lines>
 						</method>
 						<method name="update" signature="" line-rate="1" branch-rate="0" complexity="0">
 							<lines>
-								<line number="84" hits="1"></line>
-								<line number="85" hits="1"></line>
-								<line number="86" hits="1"></line>
-								<line number="87" hits="1"></line>
+								<line number="97" hits="1"></line>
+								<line number="98" hits="1"></line>
+								<line number="99" hits="1"></line>
+								<line number="100" hits="1"></line>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="60" hits="2521"></line>
-						<line number="61" hits="1096"></line>
-						<line number="62" hits="1096"></line>
-						<line number="63" hits="1096"></line>
-						<line number="65" hits="45"></line>
-						<line number="66" hits="45"></line>
-						<line number="67" hits="45"></line>
-						<line number="69" hits="184"></line>
-						<line number="70" hits="184"></line>
-						<line number="71" hits="184"></line>
-						<line number="73" hits="225"></line>
-						<line number="74" hits="225"></line>
-						<line number="75" hits="225"></line>
-						<line number="77" hits="971"></line>
-						<line number="80" hits="2512"></line>
-						<line number="81" hits="2512"></line>
-						<line number="82" hits="2512"></line>
-						<line number="84" hits="1"></line>
-						<line number="85" hits="1"></line>
-						<line number="86" hits="1"></line>
-						<line number="87" hits="1"></line>
+						<line number="64" hits="2521"></line>
+						<line number="65" hits="2521"></line>
+						<line number="66" hits="2521"></line>
+						<line number="67" hits="2521"></line>
+						<line number="68" hits="411"></line>
+						<line number="69" hits="411"></line>
+						<line number="70" hits="43"></line>
+						<line number="71" hits="43"></line>
+						<line number="72" hits="323"></line>
+						<line number="73" hits="323"></line>
+						<line number="74" hits="45"></line>
+						<line number="75" hits="45"></line>
+						<line number="77" hits="848"></line>
+						<line number="78" hits="848"></line>
+						<line number="79" hits="84"></line>
+						<line number="80" hits="84"></line>
+						<line number="81" hits="225"></line>
+						<line number="82" hits="225"></line>
+						<line number="83" hits="539"></line>
+						<line number="84" hits="539"></line>
+						<line number="86" hits="1262"></line>
+						<line number="87" hits="1262"></line>
+						<line number="90" hits="2521"></line>
+						<line number="93" hits="2512"></line>
+						<line number="94" hits="2512"></line>
+						<line number="95" hits="2512"></line>
+						<line number="97" hits="1"></line>
+						<line number="98" hits="1"></line>
+						<line number="99" hits="1"></line>
+						<line number="100" hits="1"></line>
 					</lines>
 				</class>
 				<class name="-" filename="github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go" line-rate="1" branch-rate="0" complexity="0">
 					<methods>
 						<method name="Setup" signature="" line-rate="1" branch-rate="0" complexity="0">
 							<lines>
-								<line number="92" hits="4"></line>
-								<line number="93" hits="4"></line>
-								<line number="94" hits="4"></line>
-								<line number="95" hits="4"></line>
-								<line number="96" hits="4"></line>
-								<line number="97" hits="4"></line>
-								<line number="98" hits="4"></line>
-								<line number="99" hits="4"></line>
-								<line number="100" hits="4"></line>
+								<line number="105" hits="4"></line>
+								<line number="106" hits="4"></line>
+								<line number="107" hits="4"></line>
+								<line number="108" hits="4"></line>
+								<line number="109" hits="4"></line>
+								<line number="110" hits="4"></line>
+								<line number="111" hits="4"></line>
+								<line number="112" hits="4"></line>
+								<line number="113" hits="4"></line>
 							</lines>
 						</method>
 					</methods>
 					<lines>
-						<line number="92" hits="4"></line>
-						<line number="93" hits="4"></line>
-						<line number="94" hits="4"></line>
-						<line number="95" hits="4"></line>
-						<line number="96" hits="4"></line>
-						<line number="97" hits="4"></line>
-						<line number="98" hits="4"></line>
-						<line number="99" hits="4"></line>
-						<line number="100" hits="4"></line>
+						<line number="105" hits="4"></line>
+						<line number="106" hits="4"></line>
+						<line number="107" hits="4"></line>
+						<line number="108" hits="4"></line>
+						<line number="109" hits="4"></line>
+						<line number="110" hits="4"></line>
+						<line number="111" hits="4"></line>
+						<line number="112" hits="4"></line>
+						<line number="113" hits="4"></line>
 					</lines>
 				</class>
 			</classes>

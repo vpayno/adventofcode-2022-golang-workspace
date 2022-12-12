@@ -262,7 +262,7 @@ func getMaxCalories(data map[string]int) int <span class="cov1" title="2">{
         var result int
 
         for _, calories := range data </span><span class="cov6" title="246">{
-                if calories &gt; result </span><span class="cov2" title="5">{
+                if calories &gt; result </span><span class="cov3" title="8">{
                         result = calories
                 }</span>
         }
@@ -373,9 +373,12 @@ func loadData(file *bufio.Scanner) (rounds, error) <span class="cov2" title="4">
                         return []round{}, err
                 }</span>
 
-                <span class="cov9" title="5014">r := round{
-                        them: string2move[s[them]],
-                        you:  string2move[s[you]],
+                <span class="cov9" title="5014">theirMove := string2move[s[them]]
+                yourGoal := string2outcome[s[goal]]
+
+                r := round{
+                        them: theirMove,
+                        goal: yourGoal,
                 }
 
                 data = append(data, r)</span>
@@ -404,9 +407,10 @@ type Config struct {
         inputFileName string
 }
 
+// record ids (columns in input file)
 const (
         them int = iota
-        you
+        goal
 )
 
 // Outcome describes the possible outcomes.
@@ -443,44 +447,56 @@ var string2move = map[string]move{
         "A": rock,
         "B": paper,
         "C": scissors,
-        "X": rock,
-        "Y": paper,
-        "Z": scissors,
+}
+
+var string2outcome = map[string]outcome{
+        "X": loose,
+        "Y": draw,
+        "Z": win,
 }
 
 // Round describes one round of rock-paper-scissors.
 type round struct {
         them move
-        you  move
+        goal outcome
 }
 
-func (r *round) judge() outcome <span class="cov10" title="2521">{
-        if r.you == r.them </span><span class="cov9" title="1096">{
-                return draw
-        }</span>
+func (r *round) yourMove() move <span class="cov10" title="2521">{
+        var you move
 
-        <span class="cov9" title="1425">if r.you == rock &amp;&amp; r.them == scissors </span><span class="cov5" title="45">{
-                return win
-        }</span>
+        switch r.goal </span>{
+        case loose:<span class="cov7" title="411">
+                switch r.them </span>{
+                case rock:<span class="cov5" title="43">
+                        you = scissors</span>
+                case paper:<span class="cov7" title="323">
+                        you = rock</span>
+                case scissors:<span class="cov5" title="45">
+                        you = paper</span>
+                }
+        case win:<span class="cov8" title="848">
+                switch r.them </span>{
+                case rock:<span class="cov6" title="84">
+                        you = paper</span>
+                case paper:<span class="cov7" title="225">
+                        you = scissors</span>
+                case scissors:<span class="cov8" title="539">
+                        you = rock</span>
+                }
+        default:<span class="cov9" title="1262">
+                you = r.them</span>
+        }
 
-        <span class="cov9" title="1380">if r.you == paper &amp;&amp; r.them == rock </span><span class="cov6" title="184">{
-                return win
-        }</span>
-
-        <span class="cov9" title="1196">if r.you == scissors &amp;&amp; r.them == paper </span><span class="cov7" title="225">{
-                return win
-        }</span>
-
-        <span class="cov8" title="971">return loose</span>
+        <span class="cov10" title="2521">return you</span>
 }
 
 func (r *round) score() int <span class="cov9" title="2512">{
-        return int(r.judge()) + int(r.you)
+        return int(r.goal) + int(r.yourMove())
 }</span>
 
 func (r *round) update(slice []move) <span class="cov1" title="1">{
         r.them = slice[them]
-        r.you = slice[you]
+        r.goal = outcome(int(slice[goal]))
 }</span>
 
 type rounds []round

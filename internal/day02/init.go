@@ -7,9 +7,10 @@ type Config struct {
 	inputFileName string
 }
 
+// record ids (columns in input file)
 const (
 	them int = iota
-	you
+	goal
 )
 
 // Outcome describes the possible outcomes.
@@ -46,44 +47,56 @@ var string2move = map[string]move{
 	"A": rock,
 	"B": paper,
 	"C": scissors,
-	"X": rock,
-	"Y": paper,
-	"Z": scissors,
+}
+
+var string2outcome = map[string]outcome{
+	"X": loose,
+	"Y": draw,
+	"Z": win,
 }
 
 // Round describes one round of rock-paper-scissors.
 type round struct {
 	them move
-	you  move
+	goal outcome
 }
 
-func (r *round) judge() outcome {
-	if r.you == r.them {
-		return draw
+func (r *round) yourMove() move {
+	var you move
+
+	switch r.goal {
+	case loose:
+		switch r.them {
+		case rock:
+			you = scissors
+		case paper:
+			you = rock
+		case scissors:
+			you = paper
+		}
+	case win:
+		switch r.them {
+		case rock:
+			you = paper
+		case paper:
+			you = scissors
+		case scissors:
+			you = rock
+		}
+	default:
+		you = r.them
 	}
 
-	if r.you == rock && r.them == scissors {
-		return win
-	}
-
-	if r.you == paper && r.them == rock {
-		return win
-	}
-
-	if r.you == scissors && r.them == paper {
-		return win
-	}
-
-	return loose
+	return you
 }
 
 func (r *round) score() int {
-	return int(r.judge()) + int(r.you)
+	return int(r.goal) + int(r.yourMove())
 }
 
 func (r *round) update(slice []move) {
 	r.them = slice[them]
-	r.you = slice[you]
+	r.goal = outcome(int(slice[goal]))
 }
 
 type rounds []round

@@ -11,9 +11,9 @@ github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go:100:	
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/init.go:11:			Setup				100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go:13:			Run				100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go:33:			loadData			100.0%
-github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go:63:			getTotalScore			100.0%
-github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go:60:			judge				100.0%
-github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go:80:			score				100.0%
-github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go:84:			update				100.0%
-github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go:92:			Setup				100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go:66:			getTotalScore			100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go:64:			yourMove			100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go:93:			score				100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go:97:			update				100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go:105:		Setup				100.0%
 total:												(statements)			100.0%
