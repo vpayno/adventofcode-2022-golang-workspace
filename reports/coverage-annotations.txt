@@ -1,1 +1,25 @@
 
+11     	func Run(conf Config) error {
+12     		file, err := aocshared.GetFile(conf.inputFileName)
+13     		if err != nil {
+14     			return err
+15     		}
+16     	
+17     		scanner := aocshared.GetScanner(file)
+18     	
+19     		data, err := loadData(scanner)
+20     		if err != nil {
+21 MISS			return err
+22     		}
+23     	
+24     		prioritySum, err := getPrioritySum(data)
+25     		if err != nil {
+26 MISS			return err
+27     		}
+28     	
+29     		aocshared.ShowResult(prioritySum)
+30     	
+31     		return nil
+32     	}
+
+

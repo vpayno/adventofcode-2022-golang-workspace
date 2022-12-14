@@ -36,3 +36,9 @@
 
 - [Description](./calendar/day02-description.md)
 - [Input Data](./data/day02/day02-input.txt)
+
+
+### Day 03 - Rucksack Management
+
+- [Description](./calendar/day03-description.md)
+- [Input Data](./data/day03/day03-input.txt)

@@ -5,6 +5,9 @@ github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day01			 ----	 100.00% 
 github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day02/aoc-day02.go	 main	 100.00% (7/7)
 github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day02			 ----	 100.00% (7/7)
 
+github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day03/aoc-day03.go	 main	 100.00% (7/7)
+github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day03			 ----	 100.00% (7/7)
+
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/aocshared/aocshared.go	 GetFile	 100.00% (7/7)
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/aocshared/aocshared.go	 GetScanner	 100.00% (3/3)
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/aocshared/aocshared.go	 ShowResult	 100.00% (1/1)
@@ -27,4 +30,14 @@ github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go	 Set
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go	 round.score	 100.00% (1/1)
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02		 --------------	 100.00% (46/46)
 
-Total Coverage: 100.00% (120/120)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/app.go	 loadData			 100.00% (11/11)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/app.go	 getPrioritySum			 100.00% (7/7)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/init.go	 rucksack.getSharedItem		 100.00% (6/6)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/init.go	 rucksack.getSharedPriority	 100.00% (6/6)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/init.go	 rucksack.addItems		 100.00% (4/4)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/init.go	 rucksack.getCollection		 100.00% (3/3)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/init.go	 Setup				 100.00% (2/2)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/app.go	 Run				 83.33% (10/12)
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03		 --------------------------	 96.08% (49/51)
+
+Total Coverage: 98.88% (176/178)

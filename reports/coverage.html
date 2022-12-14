@@ -59,15 +59,21 @@
 				
 				<option value="file1">github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day02/aoc-day02.go (100.0%)</option>
 				
-				<option value="file2">github.com/vpayno/adventofcode-2022-golang-workspace/internal/aocshared/aocshared.go (100.0%)</option>
+				<option value="file2">github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day03/aoc-day03.go (100.0%)</option>
 				
-				<option value="file3">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go (100.0%)</option>
+				<option value="file3">github.com/vpayno/adventofcode-2022-golang-workspace/internal/aocshared/aocshared.go (100.0%)</option>
 				
-				<option value="file4">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/init.go (100.0%)</option>
+				<option value="file4">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go (100.0%)</option>
 				
-				<option value="file5">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go (100.0%)</option>
+				<option value="file5">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/init.go (100.0%)</option>
 				
-				<option value="file6">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go (100.0%)</option>
+				<option value="file6">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go (100.0%)</option>
+				
+				<option value="file7">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go (100.0%)</option>
+				
+				<option value="file8">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/app.go (93.3%)</option>
+				
+				<option value="file9">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/init.go (100.0%)</option>
 				
 				</select>
 			</div>
@@ -146,7 +152,35 @@ func main() <span class="cov10" title="2">{
 }
 </pre>
 		
-		<pre class="file" id="file2" style="display: none">// Package aocshared is the module with the cli logic for the application.
+		<pre class="file" id="file2" style="display: none">// Package main is the cli module for the application.
+package main
+
+import (
+        "fmt"
+
+        app "github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03"
+)
+
+var challengeName = "day03"
+
+func main() <span class="cov10" title="2">{
+        // Create the configuration object.
+        conf := app.Setup(challengeName)
+
+        // Run the main application.
+        err := app.Run(conf)
+        if err != nil </span><span class="cov1" title="1">{
+                fmt.Println("Encountered error while running app.Run()")
+                fmt.Println()
+                fmt.Println(err)
+
+                // Don't panic
+                return
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">// Package aocshared is the module with the cli logic for the application.
 package aocshared
 
 import (
@@ -189,7 +223,7 @@ func ShowResult(result int) <span class="cov1" title="1">{
 }</span>
 </pre>
 		
-		<pre class="file" id="file3" style="display: none">// Package day01 is the module with the cli logic for the application.
+		<pre class="file" id="file4" style="display: none">// Package day01 is the module with the cli logic for the application.
 package day01
 
 import (
@@ -301,7 +335,7 @@ func getResultTopThreeCalories(data map[string]int) int <span class="cov1" title
 }
 </pre>
 		
-		<pre class="file" id="file4" style="display: none">// Package day01 is the module with the cli logic for the cmd application.
+		<pre class="file" id="file5" style="display: none">// Package day01 is the module with the cli logic for the cmd application.
 package day01
 
 // Config holds the application's configuration.
@@ -322,7 +356,7 @@ func Setup(appName string) Config <span class="cov10" title="4">{
 }</span>
 </pre>
 		
-		<pre class="file" id="file5" style="display: none">// Package day02 is the module with the cli logic for the application.
+		<pre class="file" id="file6" style="display: none">// Package day02 is the module with the cli logic for the application.
 package day02
 
 import (
@@ -398,7 +432,7 @@ func getTotalScore(data rounds) int <span class="cov1" title="2">{
 }
 </pre>
 		
-		<pre class="file" id="file6" style="display: none">// Package day02 is the module with the cli logic for the cmd application.
+		<pre class="file" id="file7" style="display: none">// Package day02 is the module with the cli logic for the cmd application.
 package day02
 
 // Config holds the application's configuration.
@@ -500,6 +534,158 @@ func (r *round) update(slice []move) <span class="cov1" title="1">{
 }</span>
 
 type rounds []round
+
+// Setup creates the applications configuration object.
+func Setup(appName string) Config <span class="cov2" title="4">{
+
+        conf := Config{
+                appName:       appName,
+                inputFileName: "data/" + appName + "/" + appName + "-input.txt",
+        }
+
+        return conf
+}</span>
+</pre>
+		
+		<pre class="file" id="file8" style="display: none">// Package day03 is the module with the cli logic for the application.
+package day03
+
+import (
+        "bufio"
+
+        "github.com/vpayno/adventofcode-2022-golang-workspace/internal/aocshared"
+)
+
+// Run is called my the gain function. It's basically the main function of the app.
+func Run(conf Config) error <span class="cov2" title="3">{
+        file, err := aocshared.GetFile(conf.inputFileName)
+        if err != nil </span><span class="cov1" title="2">{
+                return err
+        }</span>
+
+        <span class="cov1" title="1">scanner := aocshared.GetScanner(file)
+
+        data, err := loadData(scanner)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov1" title="1">prioritySum, err := getPrioritySum(data)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov1" title="1">aocshared.ShowResult(prioritySum)
+
+        return nil</span>
+}
+
+func loadData(file *bufio.Scanner) (rucksacks, error) <span class="cov2" title="3">{
+        data := rucksacks{}
+
+        for file.Scan() </span><span class="cov10" title="603">{
+                line := file.Text()
+
+                if line == "" </span><span class="cov1" title="1">{
+                        continue</span>
+                }
+
+                <span class="cov9" title="602">r := rucksack{}
+                err := r.addItems(line)
+                if err != nil </span><span class="cov1" title="1">{
+                        return data, err
+                }</span>
+
+                <span class="cov9" title="601">data = append(data, r)</span>
+        }
+
+        <span class="cov1" title="2">return data, nil</span>
+}
+
+func getPrioritySum(data rucksacks) (int, error) <span class="cov2" title="3">{
+        var result int
+
+        for _, r := range data </span><span class="cov9" title="307">{
+                priority, err := r.getSharedPriority()
+                if err != nil </span><span class="cov1" title="1">{
+                        return 0, err
+                }</span>
+
+                <span class="cov9" title="306">result += priority</span>
+        }
+
+        <span class="cov1" title="2">return result, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file9" style="display: none">// Package day03 is the module with the cli logic for the cmd application.
+package day03
+
+import (
+        "errors"
+        "fmt"
+        "strings"
+        "unicode"
+)
+
+// Config holds the application's configuration.
+type Config struct {
+        appName       string
+        inputFileName string
+}
+
+// Rucksack holds an Elf's items.
+type rucksack struct {
+        items string
+}
+
+func (r *rucksack) addItems(items string) error <span class="cov8" title="610">{
+        if len(items)%2 != 0 </span><span class="cov1" title="2">{
+                return fmt.Errorf("items list isn't evenly divisible (len=%d)", len(items))
+        }</span>
+
+        <span class="cov8" title="608">r.items = items
+
+        return nil</span>
+}
+
+func (r *rucksack) getCollection(num int) string <span class="cov8" title="624">{
+
+        if num == 1 </span><span class="cov7" title="312">{
+                return r.items[0 : len(r.items)/2]
+        }</span>
+
+        <span class="cov7" title="312">return r.items[len(r.items)/2:]</span>
+}
+
+// lot's of room or optimizations
+func (r *rucksack) getSharedItem() (rune, error) <span class="cov7" title="311">{
+        collection1 := r.getCollection(1)
+        collection2 := r.getCollection(2)
+
+        for _, char := range collection1 </span><span class="cov10" title="2259">{
+                if strings.ContainsRune(collection2, char) </span><span class="cov7" title="308">{
+                        return char, nil
+                }</span>
+        }
+
+        <span class="cov2" title="3">return rune(0), errors.New("rucksack compartments doesn't have a shared item")</span>
+}
+
+func (r *rucksack) getSharedPriority() (int, error) <span class="cov7" title="309">{
+        shared, err := r.getSharedItem()
+        if err != nil </span><span class="cov1" title="2">{
+                return 0, err
+        }</span>
+
+        <span class="cov7" title="307">if unicode.IsLower(shared) </span><span class="cov6" title="138">{
+                return int(shared) - 96, nil
+        }</span>
+
+        <span class="cov6" title="169">return int(shared) - 38, nil</span>
+}
+
+type rucksacks []rucksack
 
 // Setup creates the applications configuration object.
 func Setup(appName string) Config <span class="cov2" title="4">{

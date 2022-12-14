@@ -1,5 +1,6 @@
 github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day01/aoc-day01.go:12:			main				100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day02/aoc-day02.go:12:			main				100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day03/aoc-day03.go:12:			main				100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/aocshared/aocshared.go:12:	GetFile				100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/aocshared/aocshared.go:31:	GetScanner			100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/aocshared/aocshared.go:39:	ShowResult			100.0%
@@ -16,4 +17,12 @@ github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go:64:	
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go:93:			score				100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go:97:			update				100.0%
 github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go:105:		Setup				100.0%
-total:												(statements)			100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/app.go:11:			Run				83.3%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/app.go:34:			loadData			100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/app.go:56:			getPrioritySum			100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/init.go:22:			addItems			100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/init.go:32:			getCollection			100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/init.go:42:			getSharedItem			100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/init.go:55:			getSharedPriority		100.0%
+github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/init.go:71:			Setup				100.0%
+total:												(statements)			98.9%
