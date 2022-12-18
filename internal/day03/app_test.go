@@ -31,7 +31,7 @@ func TestRun(t *testing.T) {
 	assert.Nil(t, err, cause)
 }
 
-func TestRun_fileError(t *testing.T) {
+func TestRun_missingFile(t *testing.T) {
 	// this tests fails because it can't find the file
 	conf := Setup("day00")
 
@@ -40,7 +40,7 @@ func TestRun_fileError(t *testing.T) {
 }
 
 func TestRun_badData(t *testing.T) {
-	// this tests fails because it can't find the file
+	// this tests fails because some of the records are invalid
 	conf := Setup("day03")
 
 	// Give it bad data.
@@ -48,6 +48,39 @@ func TestRun_badData(t *testing.T) {
 
 	err := Run(conf)
 	assert.NotNil(t, err, "Run() didn't fail with a bad data error")
+}
+
+func TestRun_badData2(t *testing.T) {
+	// this tests fails because some of the records are invalid
+	conf := Setup("day03")
+
+	// Give it bad data.
+	conf.inputFileName = "data/day03/day03-input-uneven_pockets.txt"
+
+	err := Run(conf)
+	assert.NotNil(t, err, "Run() didn't fail with an addItems() error")
+}
+
+func TestRun_unevenGroups(t *testing.T) {
+	// this tests fails because the not all the sack groups have 3 elves
+	conf := Setup("day03")
+
+	// Give it bad data.
+	conf.inputFileName = "data/day03/day03-input-bad_group_size.txt"
+
+	err := Run(conf)
+	assert.NotNil(t, err, "Run() didn't fail with a group size error")
+}
+
+func TestRun_noSharedItems(t *testing.T) {
+	// this tests fails because there are no shared items
+	conf := Setup("day03")
+
+	// Give it bad data.
+	conf.inputFileName = "data/day03/day03-input-no_shared_items.txt"
+
+	err := Run(conf)
+	assert.NotNil(t, err, "Run() didn't fail with no shared item error")
 }
 
 func TestLoadData(t *testing.T) {
@@ -80,9 +113,7 @@ func TestLoadData_badFile1(t *testing.T) {
 }
 
 func TestLoadData_badFile2(t *testing.T) {
-	t.Skip("disabling test for now")
-
-	fileName := "data/day03/day03-input-bad_data2.txt"
+	fileName := "data/day03/day03-input-uneven_pockets.txt"
 
 	file, err := aocshared.GetFile(fileName)
 	assert.Nil(t, err, err)
@@ -94,7 +125,7 @@ func TestLoadData_badFile2(t *testing.T) {
 }
 
 func TestGetPrioritySum(t *testing.T) {
-	rucksacks := []rucksack{}
+	sacks := rucksacks{}
 
 	r := rucksack{}
 
@@ -110,19 +141,19 @@ func TestGetPrioritySum(t *testing.T) {
 	for _, s := range data {
 		err := r.addItems(s)
 		assert.Nil(t, err, err)
-		rucksacks = append(rucksacks, r)
+		sacks = append(sacks, r)
 	}
 
 	want := 157
 
-	got, err := getPrioritySum(rucksacks)
+	got, err := getPrioritySum(sacks)
 	assert.Nil(t, err)
 
 	assert.Equal(t, want, got)
 }
 
 func TestGetPrioritySum_error(t *testing.T) {
-	rucksacks := []rucksack{}
+	sacks := rucksacks{}
 
 	r := rucksack{}
 
@@ -133,9 +164,94 @@ func TestGetPrioritySum_error(t *testing.T) {
 	for _, s := range data {
 		err := r.addItems(s)
 		assert.NotNil(t, err, err)
-		rucksacks = append(rucksacks, r)
+		sacks = append(sacks, r)
 	}
 
-	_, err := getPrioritySum(rucksacks)
+	_, err := getPrioritySum(sacks)
 	assert.NotNil(t, err)
+}
+
+func TestGetGroupPrioritySum(t *testing.T) {
+	wantSackGroups := 6
+	want := 70
+
+	sacks := rucksacks{}
+
+	r := rucksack{}
+
+	data := []string{
+		"vJrwpWtwJgWrhcsFMMfFFhFp",
+		"jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
+		"PmmdzqPrVvPwwTWBwg",
+		"wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
+		"ttgJtRGJQctTZtZT",
+		"CrZsJsPPZsGzwwsLwLmpwMDw",
+	}
+
+	for _, s := range data {
+		err := r.addItems(s)
+		assert.Nil(t, err, err)
+		sacks = append(sacks, r)
+	}
+
+	gotSackGroups := len(sacks)
+	assert.Equal(t, wantSackGroups, gotSackGroups)
+
+	got, err := getGroupPrioritySum(sacks)
+	assert.Nil(t, err)
+
+	assert.Equal(t, want, got)
+}
+
+func TestGetGroupPrioritySum_emptyList(t *testing.T) {
+	wantSackGroups := 0
+	want := 0
+
+	sacks := rucksacks{}
+
+	r := rucksack{}
+
+	data := []string{}
+
+	for _, s := range data {
+		err := r.addItems(s)
+		assert.Nil(t, err, err)
+		sacks = append(sacks, r)
+	}
+
+	gotSackGroups := len(sacks)
+	assert.Equal(t, wantSackGroups, gotSackGroups)
+
+	got, err := getGroupPrioritySum(sacks)
+	assert.NotNil(t, err)
+
+	assert.Equal(t, want, got)
+}
+
+func TestGetGroupPrioritySum_notDivisibleByThree(t *testing.T) {
+	wantSackGroups := 2
+	want := 0
+
+	sacks := rucksacks{}
+
+	r := rucksack{}
+
+	data := []string{
+		"vJrwpWtwJgWrhcsFMMfFFhFp",
+		"jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
+	}
+
+	for _, s := range data {
+		err := r.addItems(s)
+		assert.Nil(t, err, err)
+		sacks = append(sacks, r)
+	}
+
+	gotSackGroups := len(sacks)
+	assert.Equal(t, wantSackGroups, gotSackGroups)
+
+	got, err := getGroupPrioritySum(sacks)
+	assert.NotNil(t, err)
+
+	assert.Equal(t, want, got)
 }

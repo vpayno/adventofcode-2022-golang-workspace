@@ -94,3 +94,25 @@ func TestRucksack_addItems(t *testing.T) {
 	assert.Nil(t, gotErr, "there was an error adding the items to the rucksack")
 	assert.Equal(t, want.items, got.items)
 }
+
+func TestGetPriority(t *testing.T) {
+	char := 'a'
+	want := 1
+	got := getPriority(char)
+	assert.Equal(t, want, got, "wrong priority, "+", for item "+string(char))
+
+	char = 'z'
+	want = 26
+	got = getPriority(char)
+	assert.Equal(t, want, got, "wrong priority, "+", for item "+string(char))
+
+	char = 'A'
+	want = 27
+	got = getPriority(char)
+	assert.Equal(t, want, got, "wrong priority, "+", for item "+string(char))
+
+	char = 'Z'
+	want = 52
+	got = getPriority(char)
+	assert.Equal(t, want, got, "wrong priority, "+", for item "+string(char))
+}

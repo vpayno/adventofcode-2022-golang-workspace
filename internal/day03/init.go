@@ -58,11 +58,7 @@ func (r *rucksack) getSharedPriority() (int, error) {
 		return 0, err
 	}
 
-	if unicode.IsLower(shared) {
-		return int(shared) - 96, nil
-	}
-
-	return int(shared) - 38, nil
+	return getPriority(shared), nil
 }
 
 type rucksacks []rucksack
@@ -76,4 +72,12 @@ func Setup(appName string) Config {
 	}
 
 	return conf
+}
+
+func getPriority(item rune) int {
+	if unicode.IsLower(item) {
+		return int(item) - 96
+	}
+
+	return int(item) - 38
 }

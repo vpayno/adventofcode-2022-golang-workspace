@@ -39,3 +39,45 @@ func GetScanner(file *os.File) *bufio.Scanner {
 func ShowResult(result int) {
 	fmt.Printf("%d\n", result)
 }
+
+// Empty type to avoid ugly struct{}{}
+var Empty struct{}
+
+// Set holds a collection of unique items.
+type Set map[rune]struct{}
+
+// SetFromSlice creates a set from a slice.
+func SetFromSlice(slice []rune) Set {
+	set := make(Set)
+
+	for _, element := range slice {
+		set[element] = Empty
+	}
+
+	return set
+}
+
+// SetIntersect finds the intersection of two sets.
+func SetIntersect(s1, s2 Set) []rune {
+	common := []rune{}
+
+	for key := range s1 {
+		_, found := s2[key]
+		if found {
+			common = append(common, key)
+		}
+	}
+
+	return common
+}
+
+// SplitString converts a string into a slice of runes.
+func SplitString(str string) []rune {
+	runes := []rune{}
+
+	for _, r := range str {
+		runes = append(runes, r)
+	}
+
+	return runes
+}

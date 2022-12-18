@@ -127,3 +127,72 @@ func TestShowResult(t *testing.T) {
 		t.Errorf("main(); want %q, got %q", want, got)
 	}
 }
+
+func TestSetFfromSlice(t *testing.T) {
+	want := Set{
+		'a': Empty,
+		'b': Empty,
+		'c': Empty,
+	}
+
+	input := []rune{'a', 'b', 'c', 'c', 'b', 'a'}
+	got := SetFromSlice(input)
+
+	assert.Equal(t, len(want), len(got), "set sizes aern't equal")
+
+	for key := range want {
+		wantValue, wantFound := want[key]
+		gotValue, gotFound := got[key]
+
+		assert.True(t, wantFound, "key, "+string(key)+", not found in want Set, how is that possible?")
+		assert.True(t, gotFound, "key, "+string(key)+", not found in got Set")
+
+		assert.Equal(t, wantValue, gotValue)
+	}
+}
+
+func TestSetIntersect(t *testing.T) {
+	want := []rune{'A'}
+
+	set1 := Set{
+		'A': Empty,
+		'a': Empty,
+		'b': Empty,
+		'c': Empty,
+	}
+
+	set2 := Set{
+		'A': Empty,
+		'd': Empty,
+		'e': Empty,
+		'f': Empty,
+	}
+
+	got := SetIntersect(set1, set2)
+
+	assert.Equal(t, len(want), len(got), "slice sizes aern't equal")
+
+	for key := range want {
+		wantValue := want[key]
+		gotValue := got[key]
+
+		assert.Equal(t, wantValue, gotValue)
+	}
+}
+
+func TestSplitString(t *testing.T) {
+	input := "abcd"
+
+	want := []rune{'a', 'b', 'c', 'd'}
+
+	got := SplitString(input)
+
+	assert.Equal(t, len(want), len(got), "slice sizes aern't equal")
+
+	for key := range want {
+		wantValue := want[key]
+		gotValue := got[key]
+
+		assert.Equal(t, wantValue, gotValue)
+	}
+}

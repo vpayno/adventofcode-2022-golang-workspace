@@ -71,7 +71,7 @@
 				
 				<option value="file7">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go (100.0%)</option>
 				
-				<option value="file8">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/app.go (93.3%)</option>
+				<option value="file8">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/app.go (100.0%)</option>
 				
 				<option value="file9">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/init.go (100.0%)</option>
 				
@@ -191,13 +191,13 @@ import (
 )
 
 // GetFile takes a file name and returns a file handle.
-func GetFile(fileName string) (*os.File, error) <span class="cov10" title="4">{
+func GetFile(fileName string) (*os.File, error) <span class="cov7" title="4">{
         fileRoot, err := os.Getwd()
         if err != nil </span><span class="cov1" title="1">{
                 return nil, err
         }</span>
 
-        <span class="cov8" title="3">fileRoot = filepath.Clean(fileRoot + "/../../")
+        <span class="cov6" title="3">fileRoot = filepath.Clean(fileRoot + "/../../")
         fileName = filepath.Clean(fileRoot + "/" + fileName)
 
         // strings.HasPrefix() is pointless since we're generating the full path.
@@ -221,6 +221,48 @@ func GetScanner(file *os.File) *bufio.Scanner <span class="cov1" title="1">{
 func ShowResult(result int) <span class="cov1" title="1">{
         fmt.Printf("%d\n", result)
 }</span>
+
+// Empty type to avoid ugly struct{}{}
+var Empty struct{}
+
+// Set holds a collection of unique items.
+type Set map[rune]struct{}
+
+// SetFromSlice creates a set from a slice.
+func SetFromSlice(slice []rune) Set <span class="cov1" title="1">{
+        set := make(Set)
+
+        for _, element := range slice </span><span class="cov10" title="6">{
+                set[element] = Empty
+        }</span>
+
+        <span class="cov1" title="1">return set</span>
+}
+
+// SetIntersect finds the intersection of two sets.
+func SetIntersect(s1, s2 Set) []rune <span class="cov1" title="1">{
+        common := []rune{}
+
+        for key := range s1 </span><span class="cov7" title="4">{
+                _, found := s2[key]
+                if found </span><span class="cov1" title="1">{
+                        common = append(common, key)
+                }</span>
+        }
+
+        <span class="cov1" title="1">return common</span>
+}
+
+// SplitString converts a string into a slice of runes.
+func SplitString(str string) []rune <span class="cov1" title="1">{
+        runes := []rune{}
+
+        for _, r := range str </span><span class="cov7" title="4">{
+                runes = append(runes, r)
+        }</span>
+
+        <span class="cov1" title="1">return runes</span>
+}
 </pre>
 		
 		<pre class="file" id="file4" style="display: none">// Package day01 is the module with the cli logic for the application.
@@ -552,69 +594,125 @@ package day03
 
 import (
         "bufio"
+        "fmt"
 
         "github.com/vpayno/adventofcode-2022-golang-workspace/internal/aocshared"
 )
 
 // Run is called my the gain function. It's basically the main function of the app.
-func Run(conf Config) error <span class="cov2" title="3">{
+func Run(conf Config) error <span class="cov3" title="6">{
         file, err := aocshared.GetFile(conf.inputFileName)
         if err != nil </span><span class="cov1" title="2">{
                 return err
         }</span>
 
-        <span class="cov1" title="1">scanner := aocshared.GetScanner(file)
+        <span class="cov2" title="4">scanner := aocshared.GetScanner(file)
 
         data, err := loadData(scanner)
-        if err != nil </span><span class="cov0" title="0">{
+        if err != nil </span><span class="cov1" title="1">{
                 return err
         }</span>
 
-        <span class="cov1" title="1">prioritySum, err := getPrioritySum(data)
-        if err != nil </span><span class="cov0" title="0">{
+        <span class="cov2" title="3">prioritySum, err := getPrioritySum(data)
+        if err != nil </span><span class="cov1" title="1">{
                 return err
         }</span>
 
-        <span class="cov1" title="1">aocshared.ShowResult(prioritySum)
+        <span class="cov1" title="2">aocshared.ShowResult(prioritySum)
+
+        groupPrioritySum, err := getGroupPrioritySum(data)
+        if err != nil </span><span class="cov1" title="1">{
+                return err
+        }</span>
+
+        <span class="cov1" title="1">aocshared.ShowResult(groupPrioritySum)
 
         return nil</span>
 }
 
-func loadData(file *bufio.Scanner) (rucksacks, error) <span class="cov2" title="3">{
+func loadData(file *bufio.Scanner) (rucksacks, error) <span class="cov3" title="7">{
         data := rucksacks{}
 
-        for file.Scan() </span><span class="cov10" title="603">{
+        for file.Scan() </span><span class="cov10" title="907">{
                 line := file.Text()
 
                 if line == "" </span><span class="cov1" title="1">{
                         continue</span>
                 }
 
-                <span class="cov9" title="602">r := rucksack{}
+                <span class="cov9" title="906">r := rucksack{}
                 err := r.addItems(line)
-                if err != nil </span><span class="cov1" title="1">{
+                if err != nil </span><span class="cov2" title="3">{
                         return data, err
                 }</span>
 
-                <span class="cov9" title="601">data = append(data, r)</span>
+                <span class="cov9" title="903">data = append(data, r)</span>
         }
 
-        <span class="cov1" title="2">return data, nil</span>
+        <span class="cov2" title="4">return data, nil</span>
 }
 
-func getPrioritySum(data rucksacks) (int, error) <span class="cov2" title="3">{
+func getPrioritySum(data rucksacks) (int, error) <span class="cov3" title="5">{
         var result int
 
-        for _, r := range data </span><span class="cov9" title="307">{
+        for _, r := range data </span><span class="cov9" title="608">{
                 priority, err := r.getSharedPriority()
-                if err != nil </span><span class="cov1" title="1">{
+                if err != nil </span><span class="cov1" title="2">{
                         return 0, err
                 }</span>
 
-                <span class="cov9" title="306">result += priority</span>
+                <span class="cov9" title="606">result += priority</span>
         }
 
-        <span class="cov1" title="2">return result, nil</span>
+        <span class="cov2" title="3">return result, nil</span>
+}
+
+func getGroupPrioritySum(data rucksacks) (int, error) <span class="cov3" title="5">{
+        var groupSum int
+        group := []string{}
+        sacks := [][]string{}
+
+        if len(data) == 0 </span><span class="cov1" title="1">{
+                err := fmt.Errorf("rucksack list is empty: %v", data)
+                return 0, err
+        }</span>
+
+        <span class="cov2" title="4">if len(data)%3 != 0 </span><span class="cov1" title="2">{
+                err := fmt.Errorf("rucksack list length, %d, isn't evenly divisible by 3", len(data))
+                return 0, err
+        }</span>
+
+        <span class="cov1" title="2">for i, r := range data </span><span class="cov8" title="306">{
+                if i%3 == 0 &amp;&amp; i &gt; 0 </span><span class="cov7" title="100">{
+                        sacks = append(sacks, group)
+                        group = []string{}
+                }</span>
+
+                <span class="cov8" title="306">group = append(group, r.items)</span>
+        }
+
+        <span class="cov1" title="2">sacks = append(sacks, group)
+
+        for _, group := range sacks </span><span class="cov7" title="102">{
+                // not handling the case where the number of rucksacks isn't evenly divisibleby 3
+                g1 := aocshared.SetFromSlice(aocshared.SplitString(group[0]))
+                g2 := aocshared.SetFromSlice(aocshared.SplitString(group[1]))
+                g3 := aocshared.SetFromSlice(aocshared.SplitString(group[2]))
+
+                c1 := aocshared.SetFromSlice(aocshared.SetIntersect(g1, g2))
+                c2 := aocshared.SetFromSlice(aocshared.SetIntersect(g1, g3))
+                c3 := aocshared.SetFromSlice(aocshared.SetIntersect(g2, g3))
+
+                c1 = aocshared.SetFromSlice(aocshared.SetIntersect(c1, c2))
+                c1 = aocshared.SetFromSlice(aocshared.SetIntersect(c1, c3))
+
+                for item := range c1 </span><span class="cov7" title="102">{
+                        priority := getPriority(item)
+                        groupSum += priority
+                }</span>
+        }
+
+        <span class="cov1" title="2">return groupSum, nil</span>
 }
 </pre>
 		
@@ -639,56 +737,52 @@ type rucksack struct {
         items string
 }
 
-func (r *rucksack) addItems(items string) error <span class="cov8" title="610">{
-        if len(items)%2 != 0 </span><span class="cov1" title="2">{
+func (r *rucksack) addItems(items string) error <span class="cov8" title="922">{
+        if len(items)%2 != 0 </span><span class="cov2" title="4">{
                 return fmt.Errorf("items list isn't evenly divisible (len=%d)", len(items))
         }</span>
 
-        <span class="cov8" title="608">r.items = items
+        <span class="cov8" title="918">r.items = items
 
         return nil</span>
 }
 
-func (r *rucksack) getCollection(num int) string <span class="cov8" title="624">{
+func (r *rucksack) getCollection(num int) string <span class="cov8" title="1226">{
 
-        if num == 1 </span><span class="cov7" title="312">{
+        if num == 1 </span><span class="cov7" title="613">{
                 return r.items[0 : len(r.items)/2]
         }</span>
 
-        <span class="cov7" title="312">return r.items[len(r.items)/2:]</span>
+        <span class="cov7" title="613">return r.items[len(r.items)/2:]</span>
 }
 
 // lot's of room or optimizations
-func (r *rucksack) getSharedItem() (rune, error) <span class="cov7" title="311">{
+func (r *rucksack) getSharedItem() (rune, error) <span class="cov7" title="612">{
         collection1 := r.getCollection(1)
         collection2 := r.getCollection(2)
 
-        for _, char := range collection1 </span><span class="cov10" title="2259">{
-                if strings.ContainsRune(collection2, char) </span><span class="cov7" title="308">{
+        for _, char := range collection1 </span><span class="cov10" title="4466">{
+                if strings.ContainsRune(collection2, char) </span><span class="cov7" title="608">{
                         return char, nil
                 }</span>
         }
 
-        <span class="cov2" title="3">return rune(0), errors.New("rucksack compartments doesn't have a shared item")</span>
+        <span class="cov2" title="4">return rune(0), errors.New("rucksack compartments doesn't have a shared item")</span>
 }
 
-func (r *rucksack) getSharedPriority() (int, error) <span class="cov7" title="309">{
+func (r *rucksack) getSharedPriority() (int, error) <span class="cov7" title="610">{
         shared, err := r.getSharedItem()
-        if err != nil </span><span class="cov1" title="2">{
+        if err != nil </span><span class="cov2" title="3">{
                 return 0, err
         }</span>
 
-        <span class="cov7" title="307">if unicode.IsLower(shared) </span><span class="cov6" title="138">{
-                return int(shared) - 96, nil
-        }</span>
-
-        <span class="cov6" title="169">return int(shared) - 38, nil</span>
+        <span class="cov7" title="607">return getPriority(shared), nil</span>
 }
 
 type rucksacks []rucksack
 
 // Setup creates the applications configuration object.
-func Setup(appName string) Config <span class="cov2" title="4">{
+func Setup(appName string) Config <span class="cov3" title="7">{
 
         conf := Config{
                 appName:       appName,
@@ -697,6 +791,14 @@ func Setup(appName string) Config <span class="cov2" title="4">{
 
         return conf
 }</span>
+
+func getPriority(item rune) int <span class="cov8" title="713">{
+        if unicode.IsLower(item) </span><span class="cov7" title="322">{
+                return int(item) - 96
+        }</span>
+
+        <span class="cov7" title="391">return int(item) - 38</span>
+}
 </pre>
 		
 		</div>
