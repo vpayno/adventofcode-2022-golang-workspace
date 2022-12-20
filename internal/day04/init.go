@@ -86,6 +86,14 @@ func (p *pair) isFullyContained(elfNo int) bool {
 	return p.elf2.start >= p.elf1.start && p.elf2.end <= p.elf1.end
 }
 
+func (p *pair) isPartiallyContained(elfNo int) bool {
+	if elfNo == 1 {
+		return (p.elf2.start <= p.elf1.start && p.elf1.start <= p.elf2.end) || (p.elf2.start <= p.elf1.end && p.elf1.end <= p.elf2.end)
+	}
+
+	return (p.elf1.start <= p.elf2.start && p.elf2.start <= p.elf1.end) || (p.elf1.start <= p.elf2.end && p.elf2.end <= p.elf1.end)
+}
+
 type pairs []pair
 
 // Setup creates the applications configuration object.

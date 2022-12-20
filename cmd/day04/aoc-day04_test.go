@@ -33,7 +33,7 @@ func TestMain_app(t *testing.T) {
 		os.Stdout = osStdout
 	}()
 
-	want := "498\n"
+	want := "498\n859\n"
 
 	// Run the function who's output we want to capture.
 	main()

@@ -237,3 +237,30 @@ func TestGetFullyContainedCount(t *testing.T) {
 
 	assert.Equal(t, want, got)
 }
+
+func TestGetPartiallyContainedCount(t *testing.T) {
+	groups := pairs{}
+
+	p := pair{}
+
+	data := []string{
+		"2-4,6-8",
+		"2-3,4-5",
+		"5-7,7-9",
+		"2-8,3-7",
+		"6-6,4-6",
+		"2-6,4-8",
+	}
+
+	for _, line := range data {
+		err := p.addPair(line)
+		assert.Nil(t, err, err)
+		groups = append(groups, p)
+	}
+
+	want := 4
+
+	got := getPartiallyContainedCount(groups)
+
+	assert.Equal(t, want, got)
+}

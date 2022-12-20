@@ -21,9 +21,13 @@ func Run(conf Config) error {
 		return err
 	}
 
-	containedSum := getFullyContainedCount(data)
+	fullyContainedSum := getFullyContainedCount(data)
 
-	aocshared.ShowResult(containedSum)
+	aocshared.ShowResult(fullyContainedSum)
+
+	partiallyContainedSum := getPartiallyContainedCount(data)
+
+	aocshared.ShowResult(partiallyContainedSum)
 
 	return nil
 }
@@ -55,6 +59,18 @@ func getFullyContainedCount(data pairs) int {
 
 	for _, p := range data {
 		if p.isFullyContained(1) || p.isFullyContained(2) {
+			count++
+		}
+	}
+
+	return count
+}
+
+func getPartiallyContainedCount(data pairs) int {
+	var count int
+
+	for _, p := range data {
+		if p.isPartiallyContained(1) || p.isPartiallyContained(2) {
 			count++
 		}
 	}

@@ -372,7 +372,7 @@ func getMaxCalories(data map[string]int) int <span class="cov1" title="2">{
         var result int
 
         for _, calories := range data </span><span class="cov6" title="246">{
-                if calories &gt; result </span><span class="cov2" title="6">{
+                if calories &gt; result </span><span class="cov3" title="8">{
                         result = calories
                 }</span>
         }
@@ -858,9 +858,13 @@ func Run(conf Config) error <span class="cov3" title="8">{
                 return err
         }</span>
 
-        <span class="cov1" title="1">containedSum := getFullyContainedCount(data)
+        <span class="cov1" title="1">fullyContainedSum := getFullyContainedCount(data)
 
-        aocshared.ShowResult(containedSum)
+        aocshared.ShowResult(fullyContainedSum)
+
+        partiallyContainedSum := getPartiallyContainedCount(data)
+
+        aocshared.ShowResult(partiallyContainedSum)
 
         return nil</span>
 }
@@ -898,6 +902,18 @@ func getFullyContainedCount(data pairs) int <span class="cov1" title="2">{
 
         <span class="cov1" title="2">return count</span>
 }
+
+func getPartiallyContainedCount(data pairs) int <span class="cov1" title="2">{
+        var count int
+
+        for _, p := range data </span><span class="cov9" title="1006">{
+                if p.isPartiallyContained(1) || p.isPartiallyContained(2) </span><span class="cov8" title="863">{
+                        count++
+                }</span>
+        }
+
+        <span class="cov1" title="2">return count</span>
+}
 </pre>
 		
 		<pre class="file" id="file12" style="display: none">// Package day04 is the module with the cli logic for the cmd application.
@@ -921,34 +937,34 @@ type section struct {
         end   int
 }
 
-func (s *section) addRange(r string) error <span class="cov10" title="4063">{
+func (s *section) addRange(r string) error <span class="cov10" title="4075">{
         data := strings.Split(r, "-")
 
         if len(data) != 2 </span><span class="cov1" title="2">{
                 return fmt.Errorf("range did not contain start and end values (%v)", data)
         }</span>
 
-        <span class="cov9" title="4061">var err error
+        <span class="cov9" title="4073">var err error
 
         start, err := strconv.Atoi(data[0])
         if err != nil </span><span class="cov1" title="2">{
                 return err
         }</span>
 
-        <span class="cov9" title="4059">end, err := strconv.Atoi(data[1])
+        <span class="cov9" title="4071">end, err := strconv.Atoi(data[1])
         if err != nil </span><span class="cov1" title="2">{
                 return err
         }</span>
 
-        <span class="cov9" title="4057">if start &lt; 1 </span><span class="cov1" title="2">{
+        <span class="cov9" title="4069">if start &lt; 1 </span><span class="cov1" title="2">{
                 return fmt.Errorf("range start, %d, is less than 1", start)
         }</span>
 
-        <span class="cov9" title="4055">if end &gt; 99 </span><span class="cov1" title="2">{
+        <span class="cov9" title="4067">if end &gt; 99 </span><span class="cov1" title="2">{
                 return fmt.Errorf("range end, %d, is greather than 99", end)
         }</span>
 
-        <span class="cov9" title="4053">s.start = start
+        <span class="cov9" title="4065">s.start = start
         s.end = end
 
         return nil</span>
@@ -960,24 +976,24 @@ type pair struct {
         elf2 section
 }
 
-func (p *pair) addPair(input string) error <span class="cov9" title="2036">{
+func (p *pair) addPair(input string) error <span class="cov9" title="2042">{
         data := strings.Split(input, ",")
 
         if len(data) != 2 </span><span class="cov1" title="2">{
                 return fmt.Errorf("input list doesn't contain two entries (%v)", data)
         }</span>
 
-        <span class="cov9" title="2034">err := p.elf1.addRange(data[0])
+        <span class="cov9" title="2040">err := p.elf1.addRange(data[0])
         if err != nil </span><span class="cov2" title="6">{
                 return err
         }</span>
 
-        <span class="cov9" title="2028">err = p.elf2.addRange(data[1])
+        <span class="cov9" title="2034">err = p.elf2.addRange(data[1])
         if err != nil </span><span class="cov2" title="4">{
                 return err
         }</span>
 
-        <span class="cov9" title="2024">return nil</span>
+        <span class="cov9" title="2030">return nil</span>
 }
 
 func (p *pair) isFullyContained(elfNo int) bool <span class="cov9" title="1749">{
@@ -986,6 +1002,14 @@ func (p *pair) isFullyContained(elfNo int) bool <span class="cov9" title="1749">
         }</span>
 
         <span class="cov8" title="742">return p.elf2.start &gt;= p.elf1.start &amp;&amp; p.elf2.end &lt;= p.elf1.end</span>
+}
+
+func (p *pair) isPartiallyContained(elfNo int) bool <span class="cov8" title="1238">{
+        if elfNo == 1 </span><span class="cov8" title="1006">{
+                return (p.elf2.start &lt;= p.elf1.start &amp;&amp; p.elf1.start &lt;= p.elf2.end) || (p.elf2.start &lt;= p.elf1.end &amp;&amp; p.elf1.end &lt;= p.elf2.end)
+        }</span>
+
+        <span class="cov6" title="232">return (p.elf1.start &lt;= p.elf2.start &amp;&amp; p.elf2.start &lt;= p.elf1.end) || (p.elf1.start &lt;= p.elf2.end &amp;&amp; p.elf2.end &lt;= p.elf1.end)</span>
 }
 
 type pairs []pair
