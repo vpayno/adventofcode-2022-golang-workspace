@@ -42,3 +42,9 @@
 
 - [Description](./calendar/day03-description.md)
 - [Input Data](./data/day03/day03-input.txt)
+
+
+### [Day 04 - Camp Cleanup](https://adventofcode.com/2022/day/4)
+
+- [Description](./calendar/day04-description.md)
+- [Input Data](./data/day04/day04-input.txt)
