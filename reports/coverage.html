@@ -61,19 +61,25 @@
 				
 				<option value="file2">github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day03/aoc-day03.go (100.0%)</option>
 				
-				<option value="file3">github.com/vpayno/adventofcode-2022-golang-workspace/internal/aocshared/aocshared.go (100.0%)</option>
+				<option value="file3">github.com/vpayno/adventofcode-2022-golang-workspace/cmd/day04/aoc-day04.go (100.0%)</option>
 				
-				<option value="file4">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go (100.0%)</option>
+				<option value="file4">github.com/vpayno/adventofcode-2022-golang-workspace/internal/aocshared/aocshared.go (100.0%)</option>
 				
-				<option value="file5">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/init.go (100.0%)</option>
+				<option value="file5">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/app.go (100.0%)</option>
 				
-				<option value="file6">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go (100.0%)</option>
+				<option value="file6">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day01/init.go (100.0%)</option>
 				
-				<option value="file7">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go (100.0%)</option>
+				<option value="file7">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/app.go (100.0%)</option>
 				
-				<option value="file8">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/app.go (100.0%)</option>
+				<option value="file8">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day02/init.go (100.0%)</option>
 				
-				<option value="file9">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/init.go (100.0%)</option>
+				<option value="file9">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/app.go (100.0%)</option>
+				
+				<option value="file10">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day03/init.go (100.0%)</option>
+				
+				<option value="file11">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day04/app.go (100.0%)</option>
+				
+				<option value="file12">github.com/vpayno/adventofcode-2022-golang-workspace/internal/day04/init.go (100.0%)</option>
 				
 				</select>
 			</div>
@@ -180,7 +186,35 @@ func main() <span class="cov10" title="2">{
 }
 </pre>
 		
-		<pre class="file" id="file3" style="display: none">// Package aocshared is the module with the cli logic for the application.
+		<pre class="file" id="file3" style="display: none">// Package main is the cli module for the application.
+package main
+
+import (
+        "fmt"
+
+        app "github.com/vpayno/adventofcode-2022-golang-workspace/internal/day04"
+)
+
+var challengeName = "day04"
+
+func main() <span class="cov10" title="2">{
+        // Create the configuration object.
+        conf := app.Setup(challengeName)
+
+        // Run the main application.
+        err := app.Run(conf)
+        if err != nil </span><span class="cov1" title="1">{
+                fmt.Println("Encountered error while running app.Run()")
+                fmt.Println()
+                fmt.Println(err)
+
+                // Don't panic
+                return
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file4" style="display: none">// Package aocshared is the module with the cli logic for the application.
 package aocshared
 
 import (
@@ -265,7 +299,7 @@ func SplitString(str string) []rune <span class="cov1" title="1">{
 }
 </pre>
 		
-		<pre class="file" id="file4" style="display: none">// Package day01 is the module with the cli logic for the application.
+		<pre class="file" id="file5" style="display: none">// Package day01 is the module with the cli logic for the application.
 package day01
 
 import (
@@ -338,7 +372,7 @@ func getMaxCalories(data map[string]int) int <span class="cov1" title="2">{
         var result int
 
         for _, calories := range data </span><span class="cov6" title="246">{
-                if calories &gt; result </span><span class="cov3" title="8">{
+                if calories &gt; result </span><span class="cov2" title="6">{
                         result = calories
                 }</span>
         }
@@ -377,7 +411,7 @@ func getResultTopThreeCalories(data map[string]int) int <span class="cov1" title
 }
 </pre>
 		
-		<pre class="file" id="file5" style="display: none">// Package day01 is the module with the cli logic for the cmd application.
+		<pre class="file" id="file6" style="display: none">// Package day01 is the module with the cli logic for the cmd application.
 package day01
 
 // Config holds the application's configuration.
@@ -398,7 +432,7 @@ func Setup(appName string) Config <span class="cov10" title="4">{
 }</span>
 </pre>
 		
-		<pre class="file" id="file6" style="display: none">// Package day02 is the module with the cli logic for the application.
+		<pre class="file" id="file7" style="display: none">// Package day02 is the module with the cli logic for the application.
 package day02
 
 import (
@@ -474,7 +508,7 @@ func getTotalScore(data rounds) int <span class="cov1" title="2">{
 }
 </pre>
 		
-		<pre class="file" id="file7" style="display: none">// Package day02 is the module with the cli logic for the cmd application.
+		<pre class="file" id="file8" style="display: none">// Package day02 is the module with the cli logic for the cmd application.
 package day02
 
 // Config holds the application's configuration.
@@ -589,7 +623,7 @@ func Setup(appName string) Config <span class="cov2" title="4">{
 }</span>
 </pre>
 		
-		<pre class="file" id="file8" style="display: none">// Package day03 is the module with the cli logic for the application.
+		<pre class="file" id="file9" style="display: none">// Package day03 is the module with the cli logic for the application.
 package day03
 
 import (
@@ -716,7 +750,7 @@ func getGroupPrioritySum(data rucksacks) (int, error) <span class="cov3" title="
 }
 </pre>
 		
-		<pre class="file" id="file9" style="display: none">// Package day03 is the module with the cli logic for the cmd application.
+		<pre class="file" id="file10" style="display: none">// Package day03 is the module with the cli logic for the cmd application.
 package day03
 
 import (
@@ -799,6 +833,173 @@ func getPriority(item rune) int <span class="cov8" title="713">{
 
         <span class="cov7" title="391">return int(item) - 38</span>
 }
+</pre>
+		
+		<pre class="file" id="file11" style="display: none">// Package day04 is the module with the cli logic for the application.
+package day04
+
+import (
+        "bufio"
+
+        "github.com/vpayno/adventofcode-2022-golang-workspace/internal/aocshared"
+)
+
+// Run is called my the gain function. It's basically the main function of the app.
+func Run(conf Config) error <span class="cov3" title="8">{
+        file, err := aocshared.GetFile(conf.inputFileName)
+        if err != nil </span><span class="cov1" title="1">{
+                return err
+        }</span>
+
+        <span class="cov3" title="7">scanner := aocshared.GetScanner(file)
+
+        data, err := loadData(scanner)
+        if err != nil </span><span class="cov3" title="6">{
+                return err
+        }</span>
+
+        <span class="cov1" title="1">containedSum := getFullyContainedCount(data)
+
+        aocshared.ShowResult(containedSum)
+
+        return nil</span>
+}
+
+func loadData(file *bufio.Scanner) (pairs, error) <span class="cov4" title="15">{
+        data := pairs{}
+
+        for file.Scan() </span><span class="cov10" title="2029">{
+                line := file.Text()
+
+                if line == "" </span><span class="cov1" title="1">{
+                        continue</span>
+                }
+
+                <span class="cov9" title="2028">p := pair{}
+                err := p.addPair(line)
+                if err != nil </span><span class="cov3" title="12">{
+                        return data, err
+                }</span>
+
+                <span class="cov9" title="2016">data = append(data, p)</span>
+        }
+
+        <span class="cov2" title="3">return data, nil</span>
+}
+
+func getFullyContainedCount(data pairs) int <span class="cov1" title="2">{
+        var count int
+
+        for _, p := range data </span><span class="cov9" title="1006">{
+                if p.isFullyContained(1) || p.isFullyContained(2) </span><span class="cov8" title="500">{
+                        count++
+                }</span>
+        }
+
+        <span class="cov1" title="2">return count</span>
+}
+</pre>
+		
+		<pre class="file" id="file12" style="display: none">// Package day04 is the module with the cli logic for the cmd application.
+package day04
+
+import (
+        "fmt"
+        "strconv"
+        "strings"
+)
+
+// Config holds the application's configuration.
+type Config struct {
+        appName       string
+        inputFileName string
+}
+
+// Section stores the start and end range of an Elf's section.
+type section struct {
+        start int
+        end   int
+}
+
+func (s *section) addRange(r string) error <span class="cov10" title="4063">{
+        data := strings.Split(r, "-")
+
+        if len(data) != 2 </span><span class="cov1" title="2">{
+                return fmt.Errorf("range did not contain start and end values (%v)", data)
+        }</span>
+
+        <span class="cov9" title="4061">var err error
+
+        start, err := strconv.Atoi(data[0])
+        if err != nil </span><span class="cov1" title="2">{
+                return err
+        }</span>
+
+        <span class="cov9" title="4059">end, err := strconv.Atoi(data[1])
+        if err != nil </span><span class="cov1" title="2">{
+                return err
+        }</span>
+
+        <span class="cov9" title="4057">if start &lt; 1 </span><span class="cov1" title="2">{
+                return fmt.Errorf("range start, %d, is less than 1", start)
+        }</span>
+
+        <span class="cov9" title="4055">if end &gt; 99 </span><span class="cov1" title="2">{
+                return fmt.Errorf("range end, %d, is greather than 99", end)
+        }</span>
+
+        <span class="cov9" title="4053">s.start = start
+        s.end = end
+
+        return nil</span>
+}
+
+// Pair holds 2 elves sections.
+type pair struct {
+        elf1 section
+        elf2 section
+}
+
+func (p *pair) addPair(input string) error <span class="cov9" title="2036">{
+        data := strings.Split(input, ",")
+
+        if len(data) != 2 </span><span class="cov1" title="2">{
+                return fmt.Errorf("input list doesn't contain two entries (%v)", data)
+        }</span>
+
+        <span class="cov9" title="2034">err := p.elf1.addRange(data[0])
+        if err != nil </span><span class="cov2" title="6">{
+                return err
+        }</span>
+
+        <span class="cov9" title="2028">err = p.elf2.addRange(data[1])
+        if err != nil </span><span class="cov2" title="4">{
+                return err
+        }</span>
+
+        <span class="cov9" title="2024">return nil</span>
+}
+
+func (p *pair) isFullyContained(elfNo int) bool <span class="cov9" title="1749">{
+        if elfNo == 1 </span><span class="cov8" title="1007">{
+                return p.elf1.start &gt;= p.elf2.start &amp;&amp; p.elf1.end &lt;= p.elf2.end
+        }</span>
+
+        <span class="cov8" title="742">return p.elf2.start &gt;= p.elf1.start &amp;&amp; p.elf2.end &lt;= p.elf1.end</span>
+}
+
+type pairs []pair
+
+// Setup creates the applications configuration object.
+func Setup(appName string) Config <span class="cov3" title="9">{
+
+        conf := Config{
+                appName:       appName,
+                inputFileName: "data/" + appName + "/" + appName + "-input.txt",
+        }
+
+        return conf
+}</span>
 </pre>
 		
 		</div>

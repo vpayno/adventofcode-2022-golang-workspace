@@ -52,3 +52,6 @@ In this example, there are `2` such pairs.
 
 **In how many assignment pairs does one range fully contain the other?**
 
+Your puzzle answer was `498`.
+
+The first half of this puzzle is complete! It provides one gold star: *
