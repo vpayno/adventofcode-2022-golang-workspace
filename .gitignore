@@ -18,7 +18,7 @@ dist/
 # vendor/
 
 # build artifacts
-# /cli-*
+/aoc-day[0-9][0-9]
 
 # Ignore random things (usually things generaged in CI that we don't want to track).
 octocov
