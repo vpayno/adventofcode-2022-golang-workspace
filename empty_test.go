@@ -1,6 +1,9 @@
 package clis
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestRoot(t *testing.T) {
 	/*
@@ -8,4 +11,8 @@ func TestRoot(t *testing.T) {
 	  Without it `go test -v .` prints "testing: warning: no tests to run".
 	  Or you get `?       github.com/org_name/repo_name  [no test files]` when with `./...`.
 	*/
+
+	fmt.Println()
+	fmt.Println("Did you mean to run `go test -v ./...`?")
+	fmt.Println()
 }
